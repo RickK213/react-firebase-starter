@@ -1,0 +1,34 @@
+{
+  "name": "react-firebase-starter",
+  "version": "0.0.0",
+  "description": "A starter application implementing React and Firebase",
+  "main": "index.js",
+  "scripts": {
+    "eslint": "./node_modules/.bin/eslint src/ && echo \"\\x1b[102m\\x1b[1m ESLINT \\x1b[0m\" No JavaScript ESLint errors to fix",
+    "eslint:fix": "./node_modules/.bin/eslint src/ --fix && echo \"\\x1b[102m\\x1b[1m ESLINT \\x1b[0m\" ESLint JavaScript errors fixed",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RickK213/react-firebase-starter.git"
+  },
+  "author": "Rick Kippert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RickK213/react-firebase-starter/issues"
+  },
+  "homepage": "https://github.com/RickK213/react-firebase-starter#readme",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
+    "prettier": "^1.19.1"
+  }
+}
