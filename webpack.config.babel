@@ -1,0 +1,13 @@
+export default mode => {
+  return {
+    mode,
+    module: {
+      rules: [
+        {
+          loader: 'babel-loader',
+          test: /\.js$/
+        }
+      ]
+    }
+  };
+};
