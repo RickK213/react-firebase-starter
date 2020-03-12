@@ -4,6 +4,7 @@
   "description": "A starter application implementing React and Firebase",
   "main": "index.js",
   "scripts": {
+    "build": "./node_modules/.bin/babel src/ --out-dir dist && echo \"\\x1b[102m\\x1b[1m BUNDLE \\x1b[0m\" Application bundled",
     "eslint": "./node_modules/.bin/eslint src/ && echo \"\\x1b[102m\\x1b[1m ESLINT \\x1b[0m\" No JavaScript ESLint errors to fix",
     "eslint:fix": "./node_modules/.bin/eslint src/ --fix && echo \"\\x1b[102m\\x1b[1m ESLINT \\x1b[0m\" ESLint JavaScript errors fixed",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +20,14 @@
   },
   "homepage": "https://github.com/RickK213/react-firebase-starter#readme",
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-react-constant-elements": "^7.8.3",
+    "@babel/plugin-transform-react-inline-elements": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
