@@ -16,6 +16,9 @@ export default mode => {
   }
 
   return {
+    devServer: {
+      hot: true
+    },
     mode,
     module: {
       rules: [
