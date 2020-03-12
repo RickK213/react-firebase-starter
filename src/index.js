@@ -1,3 +1,9 @@
-const init = () => undefined;
+import React from 'react';
+import { render } from 'react-dom';
 
-init();
+const Root = () => <div>Hello, world!</div>;
+
+const init = Component =>
+  render(<Component />, document.getElementsByTagName('body')[0]);
+
+init(Root);
