@@ -5,19 +5,22 @@ import { Navigation } from '../navigation/navigation';
 import { ROUTES } from '../../constants/routes';
 import { AccountScreen } from '../screens/account-screen/account-screen';
 import { HomeScreen } from '../screens/home-screen/home-screen';
+import Firebase, { FirebaseContext } from '../firebase';
 
 export const Root = () => (
-  <Router>
-    <App>
-      <Navigation />
-      <Switch>
-        <Route path={ROUTES.ACCOUNT.path}>
-          <AccountScreen />
-        </Route>
-        <Route path={ROUTES.HOME.path}>
-          <HomeScreen />
-        </Route>
-      </Switch>
-    </App>
-  </Router>
+  <FirebaseContext.Provider value={new Firebase()}>
+    <Router>
+      <App>
+        <Navigation />
+        <Switch>
+          <Route path={ROUTES.ACCOUNT.path}>
+            <AccountScreen />
+          </Route>
+          <Route path={ROUTES.HOME.path}>
+            <HomeScreen />
+          </Route>
+        </Switch>
+      </App>
+    </Router>
+  </FirebaseContext.Provider>
 );
