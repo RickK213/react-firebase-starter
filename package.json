@@ -4,10 +4,10 @@
   "description": "A starter application implementing React and Firebase",
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --env=production && echo \"\\x1b[102m\\x1b[1m BUNDLE \\x1b[0m\" Application bundled",
+    "build": "./node_modules/.bin/webpack --mode production && echo \"\\x1b[102m\\x1b[1m BUNDLE \\x1b[0m\" Application bundled",
     "eslint": "./node_modules/.bin/eslint src/ && echo \"\\x1b[102m\\x1b[1m ESLINT \\x1b[0m\" No JavaScript ESLint errors to fix",
     "eslint:fix": "./node_modules/.bin/eslint src/ --fix && echo \"\\x1b[102m\\x1b[1m ESLINT \\x1b[0m\" ESLint JavaScript errors fixed",
-    "start": "./node_modules/.bin/webpack-dev-server --env=development",
+    "start": "./node_modules/.bin/webpack-dev-server --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

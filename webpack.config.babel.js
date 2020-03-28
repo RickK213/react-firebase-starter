@@ -1,34 +1,35 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+const path = require('path');
+const webpack = require('webpack');
 
-export default mode => {
-  if (mode === 'production') {
-    return {
-      mode,
-      module: {
-        rules: [
-          {
-            loader: 'babel-loader',
-            test: /\.js$/
-          }
-        ]
+module.exports = {
+  entry: './src/index.js',
+  mode: 'development',
+  module: {
+    rules: [
+      {
+        exclude: /(node_modules)/,
+        loader: 'babel-loader',
+        options: { presets: ['@babel/env'] },
+        test: /\.(js)$/
       }
-    };
-  }
-
-  return {
-    devServer: {
-      hot: true,
-      historyApiFallback: true
-    },
-    mode,
-    module: {
-      rules: [
-        {
-          loader: 'babel-loader',
-          test: /\.js$/
-        }
-      ]
-    },
-    plugins: [new HtmlWebpackPlugin()]
-  };
+      // {
+      //   test: /\.css$/,
+      //   use: ['style-loader', 'css-loader']
+      // }
+    ]
+  },
+  resolve: { extensions: ['*', '.js'] },
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist/'),
+    publicPath: '/dist/'
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'public/'),
+    historyApiFallback: true,
+    hotOnly: true,
+    port: 3000,
+    publicPath: 'http://localhost:3000/dist/'
+  },
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 };

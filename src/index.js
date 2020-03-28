@@ -8,7 +8,7 @@ const init = Component =>
     <AppContainer>
       <Component />
     </AppContainer>,
-    document.getElementsByTagName('body')[0]
+    document.getElementById('root')
   );
 
 init(Root);
