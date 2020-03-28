@@ -17,7 +17,8 @@ export default mode => {
 
   return {
     devServer: {
-      hot: true
+      hot: true,
+      historyApiFallback: true
     },
     mode,
     module: {
