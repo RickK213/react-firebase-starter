@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Navigation /> should render correctly 1`] = `
+<nav>
+  <ul>
+    <li>
+      <Link
+        to="/"
+      >
+        Home
+      </Link>
+    </li>
+    <li>
+      <Link
+        to="/sign-up"
+      >
+        Sign Up
+      </Link>
+    </li>
+    <li>
+      <Link
+        to="/account"
+      >
+        Account
+      </Link>
+    </li>
+  </ul>
+</nav>
+`;
