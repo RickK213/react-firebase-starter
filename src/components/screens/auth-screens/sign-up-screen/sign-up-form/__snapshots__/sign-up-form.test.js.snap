@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SignUpFormComponent /> should render correctly 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    name="username"
+    onChange={[Function]}
+    placeholder="Username"
+    type="text"
+    value=""
+  />
+  <input
+    name="email"
+    onChange={[Function]}
+    placeholder="Email Address"
+    type="email"
+    value=""
+  />
+  <input
+    name="passwordOne"
+    onChange={[Function]}
+    placeholder="Password"
+    type="password"
+    value=""
+  />
+  <input
+    name="passwordTwo"
+    onChange={[Function]}
+    placeholder="Confirm Password"
+    type="password"
+    value=""
+  />
+  <button
+    disabled={true}
+    type="submit"
+  >
+    Sign Up
+  </button>
+</form>
+`;
