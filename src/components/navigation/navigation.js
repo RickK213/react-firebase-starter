@@ -10,6 +10,9 @@ export const Navigation = () => {
           <Link to={ROUTES.HOME.path}>{ROUTES.HOME.label}</Link>
         </li>
         <li>
+          <Link to={ROUTES.SIGN_UP.path}>{ROUTES.SIGN_UP.label}</Link>
+        </li>
+        <li>
           <Link to={ROUTES.ACCOUNT.path}>{ROUTES.ACCOUNT.label}</Link>
         </li>
       </ul>

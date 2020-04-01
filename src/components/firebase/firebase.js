@@ -4,7 +4,10 @@ import 'firebase/auth';
 
 class Firebase {
   constructor() {
-    app.initializeApp(FIREBASE_CONFIG);
+    // This check is to prevent firebase app/duplicate-app error on hot-reload:
+    if (!app.apps.length) {
+      app.initializeApp(FIREBASE_CONFIG);
+    }
 
     this.auth = app.auth();
   }
@@ -13,7 +16,7 @@ class Firebase {
   // TODO: These endpoints are called asynchronously and need to be resolved
   //       and handle errors
   doCreateUserWithEmailAndPassword = (email, password) => {
-    this.auth.createUserWithEmailAndPassword(email, password);
+    return this.auth.createUserWithEmailAndPassword(email, password);
   };
 
   doSignInWithEmailAndPassword = (email, password) => {

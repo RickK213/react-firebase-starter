@@ -6,6 +6,7 @@ import { ROUTES } from '../../constants/routes';
 import { AccountScreen } from '../screens/account-screen/account-screen';
 import { HomeScreen } from '../screens/home-screen/home-screen';
 import Firebase, { FirebaseContext } from '../firebase';
+import { SignUpScreen } from '../screens/auth-screens/sign-up-screen/sign-up-screen';
 
 export const Root = () => (
   <FirebaseContext.Provider value={new Firebase()}>
@@ -13,6 +14,9 @@ export const Root = () => (
       <App>
         <Navigation />
         <Switch>
+          <Route path={ROUTES.SIGN_UP.path}>
+            <SignUpScreen />
+          </Route>
           <Route path={ROUTES.ACCOUNT.path}>
             <AccountScreen />
           </Route>
