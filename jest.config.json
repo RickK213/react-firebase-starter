@@ -1,0 +1,20 @@
+{
+  "collectCoverageFrom": [
+    "src/**/*.js",
+    "!src/index.js"
+  ],
+  "coverageReporters": [
+    "lcov",
+    "text-summary"
+  ],
+  "reporters": ["jest-dot-reporter"],
+  "setupFiles": [
+    "./test-setup.js"
+  ],
+  "testMatch": [
+    "**/?(*.)+(test).js"
+  ],
+  "transform": {
+    "^.+\\.js$": "babel-jest"
+  }
+}
