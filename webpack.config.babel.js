@@ -12,10 +12,6 @@ module.exports = {
         options: { presets: ['@babel/env'] },
         test: /\.(js)$/
       }
-      // {
-      //   test: /\.css$/,
-      //   use: ['style-loader', 'css-loader']
-      // }
     ]
   },
   resolve: { extensions: ['*', '.js'] },
