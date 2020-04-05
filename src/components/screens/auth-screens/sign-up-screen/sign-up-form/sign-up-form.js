@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -42,10 +41,10 @@ export class SignUpFormComponent extends Component {
     const { firebase, history } = this.props;
     firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
+      .then(authenticatedUser => {
         // eslint-disable-next-line no-console
-        console.log('authUser', authUser);
-        this.setState(INITIAL_STATE);
+        console.log('authenticatedUser', authenticatedUser);
+        this.setState({ ...INITIAL_STATE });
         history.push(ROUTES.HOME.path);
       })
       .catch(error => {
