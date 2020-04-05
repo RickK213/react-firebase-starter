@@ -13,18 +13,16 @@ class Firebase {
   }
 
   // *** Auth API ***
-  // TODO: These endpoints are called asynchronously and need to be resolved
-  //       and handle errors
   doCreateUserWithEmailAndPassword = (email, password) => {
     return this.auth.createUserWithEmailAndPassword(email, password);
   };
 
   doSignInWithEmailAndPassword = (email, password) => {
-    this.auth.signInWithEmailAndPassword(email, password);
+    return this.auth.signInWithEmailAndPassword(email, password);
   };
 
   doSignOut = () => {
-    this.auth.signOut();
+    return this.auth.signOut();
   };
 
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
