@@ -19,10 +19,20 @@ exports[`<Navigation /> should render correctly 1`] = `
     </li>
     <li>
       <Link
+        to="/sign-in"
+      >
+        Sign In
+      </Link>
+    </li>
+    <li>
+      <Link
         to="/account"
       >
         Account
       </Link>
+    </li>
+    <li>
+      <withRouter() />
     </li>
   </ul>
 </nav>
