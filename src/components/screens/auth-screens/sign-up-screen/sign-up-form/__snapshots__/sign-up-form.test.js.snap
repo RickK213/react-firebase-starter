@@ -3,11 +3,24 @@
 exports[`<SignUpFormComponent /> should render correctly 1`] = `
 <form
   onSubmit={[Function]}
+  style={
+    Object {
+      "width": "360px",
+    }
+  }
 >
   <input
     name="username"
     onChange={[Function]}
     placeholder="Username"
+    style={
+      Object {
+        "display": "block",
+        "marginBottom": "1rem",
+        "padding": ".5rem",
+        "width": "100%",
+      }
+    }
     type="text"
     value=""
   />
@@ -15,6 +28,14 @@ exports[`<SignUpFormComponent /> should render correctly 1`] = `
     name="email"
     onChange={[Function]}
     placeholder="Email Address"
+    style={
+      Object {
+        "display": "block",
+        "marginBottom": "1rem",
+        "padding": ".5rem",
+        "width": "100%",
+      }
+    }
     type="email"
     value=""
   />
@@ -22,6 +43,14 @@ exports[`<SignUpFormComponent /> should render correctly 1`] = `
     name="passwordOne"
     onChange={[Function]}
     placeholder="Password"
+    style={
+      Object {
+        "display": "block",
+        "marginBottom": "1rem",
+        "padding": ".5rem",
+        "width": "100%",
+      }
+    }
     type="password"
     value=""
   />
@@ -29,11 +58,25 @@ exports[`<SignUpFormComponent /> should render correctly 1`] = `
     name="passwordTwo"
     onChange={[Function]}
     placeholder="Confirm Password"
+    style={
+      Object {
+        "display": "block",
+        "marginBottom": "1rem",
+        "padding": ".5rem",
+        "width": "100%",
+      }
+    }
     type="password"
     value=""
   />
   <button
     disabled={true}
+    style={
+      Object {
+        "padding": ".5rem",
+        "textTransform": "uppercase",
+      }
+    }
     type="submit"
   >
     Sign Up

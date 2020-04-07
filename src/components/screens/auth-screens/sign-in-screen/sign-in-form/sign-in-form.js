@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { ROUTES } from '../../../../../constants/routes';
 import { withFirebase } from '../../../../firebase/index';
+import { inputStyle, buttonStyle, formStyle } from '../../auth-screen-styles';
 
 const INITIAL_STATE = {
   email: '',
@@ -40,9 +41,7 @@ export class SignInFormComponent extends Component {
 
     firebase
       .doSignInWithEmailAndPassword(email, password)
-      .then(authenticatedUser => {
-        // eslint-disable-next-line no-console
-        console.log('authenticatedUser', authenticatedUser);
+      .then(() => {
         this.setState({ ...INITIAL_STATE });
         history.push(ROUTES.HOME.path);
       })
@@ -59,22 +58,26 @@ export class SignInFormComponent extends Component {
     const isInvalid = email === '' || password === '';
 
     return (
-      <form onSubmit={this.handleOnSubmit}>
+      <form onSubmit={this.handleOnSubmit} style={formStyle} autoComplete="off">
         <input
+          autoComplete="off"
           name="email"
           type="email"
           value={email}
           onChange={this.handleOnChange}
           placeholder="Email Address"
+          style={inputStyle}
         />
         <input
+          autoComplete="off"
           name="password"
           type="password"
           value={password}
           onChange={this.handleOnChange}
           placeholder="Password"
+          style={inputStyle}
         />
-        <button disabled={isInvalid} type="submit">
+        <button disabled={isInvalid} type="submit" style={buttonStyle}>
           Sign In
         </button>
 

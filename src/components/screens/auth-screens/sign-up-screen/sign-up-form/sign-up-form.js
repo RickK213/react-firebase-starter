@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { withFirebase } from '../../../../firebase';
 import { ROUTES } from '../../../../../constants/routes';
+import { inputStyle, buttonStyle, formStyle } from '../../auth-screen-styles';
 
 const INITIAL_STATE = {
   username: '',
@@ -41,9 +42,7 @@ export class SignUpFormComponent extends Component {
     const { firebase, history } = this.props;
     firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authenticatedUser => {
-        // eslint-disable-next-line no-console
-        console.log('authenticatedUser', authenticatedUser);
+      .then(() => {
         this.setState({ ...INITIAL_STATE });
         history.push(ROUTES.HOME.path);
       })
@@ -63,11 +62,12 @@ export class SignUpFormComponent extends Component {
       username === '';
 
     return (
-      <form onSubmit={this.handleOnSubmit}>
+      <form onSubmit={this.handleOnSubmit} style={formStyle}>
         <input
           name="username"
           onChange={this.handleOnChange}
           placeholder="Username"
+          style={inputStyle}
           type="text"
           value={username}
         />
@@ -75,6 +75,7 @@ export class SignUpFormComponent extends Component {
           name="email"
           onChange={this.handleOnChange}
           placeholder="Email Address"
+          style={inputStyle}
           type="email"
           value={email}
         />
@@ -82,6 +83,7 @@ export class SignUpFormComponent extends Component {
           name="passwordOne"
           onChange={this.handleOnChange}
           placeholder="Password"
+          style={inputStyle}
           type="password"
           value={passwordOne}
         />
@@ -89,11 +91,12 @@ export class SignUpFormComponent extends Component {
           name="passwordTwo"
           onChange={this.handleOnChange}
           placeholder="Confirm Password"
+          style={inputStyle}
           type="password"
           value={passwordTwo}
         />
 
-        <button type="submit" disabled={isInvalid}>
+        <button type="submit" disabled={isInvalid} style={buttonStyle}>
           Sign Up
         </button>
 

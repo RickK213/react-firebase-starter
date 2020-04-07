@@ -2,6 +2,23 @@
 
 exports[`<HomeScreen /> should render correctly 1`] = `
 <div>
-  Home Screen
+  <h2>
+    Welcome to react-redux-firebase-starter 
+    <code>
+      (0.0.0)
+    </code>
+  </h2>
+  <h4>
+    <span
+      aria-label="Under Construction"
+      role="img"
+    >
+      ⚠️
+    </span>
+    Under Construction
+  </h4>
+  <p>
+    This is a starter application implementing React, Redux and Firebase.
+  </p>
 </div>
 `;

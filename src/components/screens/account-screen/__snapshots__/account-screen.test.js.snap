@@ -2,6 +2,22 @@
 
 exports[`<AccountScreen /> should render correctly 1`] = `
 <div>
-  Account Screen
+  <h2>
+    Account
+  </h2>
+  <p>
+    <strong>
+      Email Address:
+    </strong>
+    <span
+      style={
+        Object {
+          "marginLeft": ".5rem",
+        }
+      }
+    >
+      
+    </span>
+  </p>
 </div>
 `;

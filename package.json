@@ -1,5 +1,5 @@
 {
-  "name": "react-firebase-starter",
+  "name": "react-redux-firebase-starter",
   "version": "0.0.0",
   "description": "A starter application implementing React and Firebase",
   "main": "index.js",

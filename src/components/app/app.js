@@ -5,9 +5,9 @@ import { Navigation } from '../navigation/navigation';
 import { ROUTES } from '../../constants/routes';
 import { SignUpScreen } from '../screens/auth-screens/sign-up-screen/sign-up-screen';
 import { SignInScreen } from '../screens/auth-screens/sign-in-screen/sign-in-screen';
-import { AccountScreen } from '../screens/account-screen/account-screen';
 import { HomeScreen } from '../screens/home-screen/home-screen';
 import { withFirebase } from '../firebase';
+import { AccountScreen } from '../screens/account-screen/account-screen';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -48,28 +48,30 @@ export class AppComponent extends Component {
   render() {
     const { authUser } = this.state;
 
-    const userIdentifier = authUser ? authUser.email : 'Friend';
-    const greeting = `Happy ${this.currentDayOfWeek}, ${userIdentifier}!`;
-
     return (
-      <Router>
-        <Navigation authUser={authUser} />
-        <h2>{greeting}</h2>
-        <Switch>
-          <Route path={ROUTES.SIGN_UP.path}>
-            <SignUpScreen />
-          </Route>
-          <Route path={ROUTES.SIGN_IN.path}>
-            <SignInScreen />
-          </Route>
-          <Route path={ROUTES.ACCOUNT.path}>
-            <AccountScreen />
-          </Route>
-          <Route path={ROUTES.HOME.path}>
-            <HomeScreen />
-          </Route>
-        </Switch>
-      </Router>
+      <div
+        style={{
+          fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
+        }}
+      >
+        <Router>
+          <Navigation authUser={authUser} />
+          <Switch>
+            <Route path={ROUTES.ACCOUNT.path}>
+              <AccountScreen authUser={authUser} />
+            </Route>
+            <Route path={ROUTES.SIGN_UP.path}>
+              <SignUpScreen />
+            </Route>
+            <Route path={ROUTES.SIGN_IN.path}>
+              <SignInScreen />
+            </Route>
+            <Route path={ROUTES.HOME.path}>
+              <HomeScreen />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
     );
   }
 }
