@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const AccountScreen = props => {
   const { authUser } = props;
@@ -13,4 +14,12 @@ export const AccountScreen = props => {
       </p>
     </div>
   );
+};
+
+AccountScreen.propTypes = {
+  authUser: PropTypes.object
+};
+
+AccountScreen.defaultProps = {
+  authUser: null
 };
