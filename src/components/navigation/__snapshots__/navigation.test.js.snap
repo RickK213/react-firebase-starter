@@ -1,89 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Navigation /> should render correctly 1`] = `
-<React.Fragment>
-  <nav
-    style={
-      Object {
-        "display": "flex",
-        "justifyContent": "space-between",
-      }
-    }
-  >
-    <ul
-      style={
-        Object {
-          "listStyleType": "none",
-          "margin": 0,
-          "overflow": "hidden",
-          "padding": 0,
-        }
-      }
-    >
-      <li
-        style={
-          Object {
-            "float": "left",
-          }
-        }
-      >
-        <Link
-          style={
-            Object {
-              "display": "block",
-              "padding": ".5rem 1rem",
-              "textAlign": "center",
-            }
-          }
-          to="/"
-        >
-          Home
-        </Link>
-      </li>
-      <React.Fragment>
-        <li
-          style={
-            Object {
-              "float": "left",
-            }
-          }
-        >
-          <Link
-            style={
-              Object {
-                "display": "block",
-                "padding": ".5rem 1rem",
-                "textAlign": "center",
-              }
-            }
-            to="/sign-up"
-          >
-            Sign Up
-          </Link>
-        </li>
-        <li
-          style={
-            Object {
-              "float": "left",
-            }
-          }
-        >
-          <Link
-            style={
-              Object {
-                "display": "block",
-                "padding": ".5rem 1rem",
-                "textAlign": "center",
-              }
-            }
-            to="/sign-in"
-          >
-            Sign In
-          </Link>
-        </li>
-      </React.Fragment>
-    </ul>
-  </nav>
-  <hr />
-</React.Fragment>
+<div>
+  <Context.Consumer>
+    [Function]
+  </Context.Consumer>
+</div>
 `;

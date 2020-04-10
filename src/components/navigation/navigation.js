@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ROUTES } from '../../constants/routes';
 import { SignOutButton } from '../screens/auth-screens/sign-out-button/sign-out-button';
+import { AuthUserContext } from '../session';
 
 const listStyle = {
   listStyleType: 'none',
@@ -21,7 +22,7 @@ const linkStyle = {
   padding: '.5rem 1rem'
 };
 
-export const Navigation = props => {
+export const NavigationComponent = props => {
   const { authUser } = props;
 
   return (
@@ -62,10 +63,18 @@ export const Navigation = props => {
   );
 };
 
-Navigation.propTypes = {
+NavigationComponent.propTypes = {
   authUser: PropTypes.object
 };
 
-Navigation.defaultProps = {
+NavigationComponent.defaultProps = {
   authUser: null
 };
+
+export const Navigation = () => (
+  <div>
+    <AuthUserContext.Consumer>
+      {authUser => <NavigationComponent authUser={authUser} />}
+    </AuthUserContext.Consumer>
+  </div>
+);
