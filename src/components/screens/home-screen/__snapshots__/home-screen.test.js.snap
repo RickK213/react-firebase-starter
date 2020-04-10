@@ -2,11 +2,12 @@
 
 exports[`<HomeScreen /> should render correctly 1`] = `
 <div>
+  <code>
+    Version 
+    0.0.0
+  </code>
   <h2>
     Welcome to react-redux-firebase-starter 
-    <code>
-      (0.0.0)
-    </code>
   </h2>
   <h4>
     <span
