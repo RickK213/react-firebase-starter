@@ -7,6 +7,7 @@ import { SignInScreen } from '../screens/auth-screens/sign-in-screen/sign-in-scr
 import { HomeScreen } from '../screens/home-screen/home-screen';
 import { AccountScreen } from '../screens/account-screen/account-screen';
 import { withAuthentication } from '../session';
+import { PasswordForgetScreen } from '../screens/auth-screens/password-forget-screen/password-forget-screen';
 
 export const AppComponent = () => {
   return (
@@ -20,6 +21,9 @@ export const AppComponent = () => {
         <Switch>
           <Route path={ROUTES.ACCOUNT.path}>
             <AccountScreen />
+          </Route>
+          <Route path={ROUTES.PASSWORD_FORGET.path}>
+            <PasswordForgetScreen />
           </Route>
           <Route path={ROUTES.SIGN_UP.path}>
             <SignUpScreen />
