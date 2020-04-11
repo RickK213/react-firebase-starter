@@ -2,6 +2,7 @@
   "collectCoverageFrom": [
     "src/**/*.js",
     "!src/index.js",
+    "!src/constants/*.js",
     "!src/components/root/root.js"
   ],
   "coverageReporters": [
