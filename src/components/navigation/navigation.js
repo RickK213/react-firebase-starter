@@ -52,7 +52,7 @@ export const NavigationComponent = props => {
         {authUser && (
           <div>
             <Link to={ROUTES.ACCOUNT.path} style={{ marginRight: '.5rem' }}>
-              {authUser.email}
+              {ROUTES.ACCOUNT.label}
             </Link>
             <SignOutButton />
           </div>

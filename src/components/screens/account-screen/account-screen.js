@@ -10,7 +10,7 @@ export const AccountScreenComponent = props => {
   return (
     <div>
       <h2>Account</h2>
-      <p>
+      <p style={{ marginBottom: '1.5rem' }}>
         <strong>Email Address:</strong>
         <span style={{ marginLeft: '.5rem' }}>{emailLabel}</span>
       </p>
