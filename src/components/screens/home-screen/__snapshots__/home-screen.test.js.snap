@@ -2,13 +2,29 @@
 
 exports[`<HomeScreen /> should render correctly 1`] = `
 <div>
-  <code>
-    Version 
-    0.0.0
-  </code>
-  <h2>
-    Welcome to react-redux-firebase-starter 
-  </h2>
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "justifyContent": "space-between",
+        "marginTop": "20px",
+      }
+    }
+  >
+    <h2
+      style={
+        Object {
+          "marginTop": 0,
+        }
+      }
+    >
+      Welcome to react-redux-firebase-starter 
+    </h2>
+    <code>
+      Version 
+      0.0.0
+    </code>
+  </div>
   <h4>
     <span
       aria-label="Under Construction"
