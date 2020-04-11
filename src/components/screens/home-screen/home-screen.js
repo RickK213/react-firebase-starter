@@ -15,7 +15,7 @@ export const HomeScreen = () => {
       >
         <h2 style={{ marginTop: 0 }}>{greeting}</h2>
         <code>
-          Version&nbsp;
+          v&nbsp;
           {version}
         </code>
       </div>
