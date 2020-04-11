@@ -5,7 +5,7 @@ import { ROUTES } from '../../constants/routes';
 import { SignUpScreen } from '../screens/auth-screens/sign-up-screen/sign-up-screen';
 import { SignInScreen } from '../screens/auth-screens/sign-in-screen/sign-in-screen';
 import { HomeScreen } from '../screens/home-screen/home-screen';
-import { AccountScreen } from '../screens/account-screen/account-screen';
+import { AccountScreen } from '../screens/auth-screens/account-screen/account-screen';
 import { withAuthentication } from '../session';
 import { PasswordForgetScreen } from '../screens/auth-screens/password-forget-screen/password-forget-screen';
 

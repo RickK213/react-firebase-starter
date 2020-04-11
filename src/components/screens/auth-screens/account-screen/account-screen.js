@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AuthUserContext } from '../../session';
+import { AuthUserContext } from '../../../session';
 import { PasswordChangeForm } from './password-change-form/password-change-form';
 
 export const AccountScreenComponent = props => {

@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { withFirebase } from '../../../firebase';
-import {
-  inputStyle,
-  buttonStyle,
-  formStyle
-} from '../../auth-screens/auth-screen-styles';
+import { withFirebase } from '../../../../firebase';
+import { inputStyle, buttonStyle, formStyle } from '../../auth-screen-styles';
 
 export const INITIAL_STATE = {
   passwordOne: '',
