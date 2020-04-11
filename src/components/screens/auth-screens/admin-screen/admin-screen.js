@@ -55,10 +55,10 @@ class AdminScreenComponent extends Component {
 
     const userRows = users.map(user => {
       const { email, username, uid, roles } = user;
-      const roleLabel = roles.length
+      const rolesLabel = roles.length
         ? roles.map((role, index) => {
-            const roleLabel = index + 1 < roles.length ? `${role}, ` : role;
-            return <span key={role}>{roleLabel}</span>;
+            const label = index + 1 < roles.length ? `${role}, ` : role;
+            return <span key={role}>{label}</span>;
           })
         : 'No roles found.';
 
@@ -66,7 +66,7 @@ class AdminScreenComponent extends Component {
         <tr key={uid}>
           <td style={cellStyle}>{email}</td>
           <td style={cellStyle}>{username}</td>
-          <td style={cellStyle}>{roleLabel}</td>
+          <td style={cellStyle}>{rolesLabel}</td>
         </tr>
       );
     });
