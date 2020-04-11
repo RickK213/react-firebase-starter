@@ -37,10 +37,14 @@ export class SignUpFormComponent extends Component {
   }
 
   handleOnSubmit(event) {
-    const { email, passwordOne } = this.state;
+    const { email, passwordOne, username } = this.state;
     const { firebase, history } = this.props;
     firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
+      .then(authUser => {
+        // Create a user in the firebase realtime db:
+        return firebase.user(authUser.user.uid).set({ email, username });
+      })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
         history.push(ROUTES.ACCOUNT.path);
