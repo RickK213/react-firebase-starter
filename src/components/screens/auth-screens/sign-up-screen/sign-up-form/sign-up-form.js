@@ -48,13 +48,10 @@ export class SignUpFormComponent extends Component {
     const { email, isAdmin, passwordOne, username } = this.state;
     const { firebase, history } = this.props;
 
-    const roles = {};
-
-    // default user:
-    roles[ROLES.BASE_USER] = ROLES.BASE_USER;
+    const roles = [ROLES.BASE_USER];
 
     if (isAdmin) {
-      roles[ROLES.ADMIN] = ROLES.ADMIN;
+      roles.push(ROLES.ADMIN);
     }
 
     firebase

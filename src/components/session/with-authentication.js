@@ -27,13 +27,15 @@ export const withAuthentication = Component => {
     componentDidMount() {
       const { firebase } = this.props;
 
-      this.authListener = firebase.auth.onAuthStateChanged(authUser => {
-        if (authUser) {
+      // firebase.onAuthUserListener takes in 'next' and 'fallback' functions:
+      this.authListener = firebase.onAuthUserListener(
+        authUser => {
           this.setState({ authUser });
-        } else {
+        },
+        () => {
           this.setState({ authUser: null });
         }
-      });
+      );
     }
 
     componentWillUnmount() {

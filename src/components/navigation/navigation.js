@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { ROUTES } from '../../constants/routes';
 import { SignOutButton } from '../screens/auth-screens/sign-out-button/sign-out-button';
 import { AuthUserContext } from '../session';
+import { ROLES } from '../../constants/roles';
 
 const navStyle = { display: 'flex', justifyContent: 'space-between' };
 
@@ -43,11 +44,13 @@ export const NavigationComponent = props => {
                   {ROUTES.ACCOUNT.label}
                 </Link>
               </li>
-              <li style={listItemStyle}>
-                <Link style={linkStyle} to={ROUTES.ADMIN.path}>
-                  {ROUTES.ADMIN.label}
-                </Link>
-              </li>
+              {authUser.roles.includes(ROLES.ADMIN) && (
+                <li style={listItemStyle}>
+                  <Link style={linkStyle} to={ROUTES.ADMIN.path}>
+                    {ROUTES.ADMIN.label}
+                  </Link>
+                </li>
+              )}
             </React.Fragment>
           ) : (
             <React.Fragment>
@@ -64,7 +67,15 @@ export const NavigationComponent = props => {
             </React.Fragment>
           )}
         </ul>
-        {authUser && <SignOutButton />}
+        {authUser && (
+          <div>
+            <span style={{ marginRight: '1rem' }}>
+              Welcome back,&nbsp;
+              {authUser.username}
+            </span>
+            <SignOutButton />
+          </div>
+        )}
       </nav>
       <hr />
     </React.Fragment>

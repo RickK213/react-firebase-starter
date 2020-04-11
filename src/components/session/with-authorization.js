@@ -6,7 +6,7 @@ import { ROUTES } from '../../constants/routes';
 import AuthUserContext from './context';
 
 export const withAuthorization = condition => Component => {
-  class WithAuthentication extends React.Component {
+  class WithAuthorization extends React.Component {
     static propTypes = {
       firebase: PropTypes.object,
       history: PropTypes.object
@@ -20,11 +20,15 @@ export const withAuthorization = condition => Component => {
     componentDidMount() {
       const { firebase, history } = this.props;
 
-      this.authListener = firebase.auth.onAuthStateChanged(authUser => {
-        if (!condition(authUser)) {
-          history.push(ROUTES.SIGN_IN.path);
-        }
-      });
+      // firebase.onAuthUserListener takes in 'next' and 'fallback' functions:
+      this.authListener = firebase.onAuthUserListener(
+        authUser => {
+          if (!condition(authUser)) {
+            history.push(ROUTES.SIGN_IN.path);
+          }
+        },
+        () => history.push(ROUTES.SIGN_IN.path)
+      );
     }
 
     componentWillUnmount() {
@@ -43,5 +47,5 @@ export const withAuthorization = condition => Component => {
     }
   }
 
-  return withRouter(withFirebase(WithAuthentication));
+  return withRouter(withFirebase(WithAuthorization));
 };

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 import { withFirebase } from '../../../firebase';
+import { withAuthorization } from '../../../session/with-authorization';
+import { ROLES } from '../../../../constants/roles';
 
 const cellStyle = {
   border: '1px solid lightGray',
@@ -53,8 +55,11 @@ class AdminScreenComponent extends Component {
 
     const userRows = users.map(user => {
       const { email, username, uid, roles } = user;
-      const roleLabel = !isEmpty(roles)
-        ? Object.keys(roles).join(', ')
+      const roleLabel = roles.length
+        ? roles.map((role, index) => {
+            const roleLabel = index + 1 < roles.length ? `${role}, ` : role;
+            return <span key={role}>{roleLabel}</span>;
+          })
         : 'No roles found.';
 
       return (
@@ -118,4 +123,8 @@ class AdminScreenComponent extends Component {
   }
 }
 
-export const AdminScreen = withFirebase(AdminScreenComponent);
+const condition = authUser => authUser && authUser.roles.includes(ROLES.ADMIN);
+
+export const AdminScreen = withAuthorization(condition)(
+  withFirebase(AdminScreenComponent)
+);
