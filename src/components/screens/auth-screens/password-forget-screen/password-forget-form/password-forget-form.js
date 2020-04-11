@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withFirebase } from '../../../../firebase/index';
 import { inputStyle, buttonStyle, formStyle } from '../../auth-screen-styles';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   email: '',
   error: null
 };
@@ -42,6 +42,7 @@ export class PasswordForgetFormComponent extends Component {
       })
       .catch(error => {
         this.setState({ error });
+        throw error;
       });
 
     event.preventDefault();
