@@ -14,10 +14,8 @@ export const HomeScreen = () => {
         }}
       >
         <h2 style={{ marginTop: 0 }}>{greeting}</h2>
-        <code>
-          v&nbsp;
-          {version}
-        </code>
+        {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
+        <code>v{version}</code>
       </div>
       <h4>
         <span role="img" aria-label="Under Construction">
