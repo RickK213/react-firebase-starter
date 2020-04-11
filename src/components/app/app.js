@@ -19,17 +19,17 @@ export const AppComponent = () => {
       <Router>
         <Navigation />
         <Switch>
-          <Route path={ROUTES.ACCOUNT.path}>
-            <AccountScreen />
-          </Route>
           <Route path={ROUTES.PASSWORD_FORGET.path}>
             <PasswordForgetScreen />
+          </Route>
+          <Route path={ROUTES.SIGN_IN.path}>
+            <SignInScreen />
           </Route>
           <Route path={ROUTES.SIGN_UP.path}>
             <SignUpScreen />
           </Route>
-          <Route path={ROUTES.SIGN_IN.path}>
-            <SignInScreen />
+          <Route path={ROUTES.ACCOUNT.path}>
+            <AccountScreen />
           </Route>
           <Route path={ROUTES.HOME.path}>
             <HomeScreen />

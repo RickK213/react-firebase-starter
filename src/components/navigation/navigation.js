@@ -5,6 +5,8 @@ import { ROUTES } from '../../constants/routes';
 import { SignOutButton } from '../screens/auth-screens/sign-out-button/sign-out-button';
 import { AuthUserContext } from '../session';
 
+const navStyle = { display: 'flex', justifyContent: 'space-between' };
+
 const listStyle = {
   listStyleType: 'none',
   margin: 0,
@@ -27,14 +29,20 @@ export const NavigationComponent = props => {
 
   return (
     <React.Fragment>
-      <nav style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <nav style={navStyle}>
         <ul style={listStyle}>
           <li style={listItemStyle}>
             <Link style={linkStyle} to={ROUTES.HOME.path}>
               {ROUTES.HOME.label}
             </Link>
           </li>
-          {!authUser && (
+          {authUser ? (
+            <li style={listItemStyle}>
+              <Link style={linkStyle} to={ROUTES.ACCOUNT.path}>
+                {ROUTES.ACCOUNT.label}
+              </Link>
+            </li>
+          ) : (
             <React.Fragment>
               <li style={listItemStyle}>
                 <Link style={linkStyle} to={ROUTES.SIGN_UP.path}>
@@ -49,14 +57,7 @@ export const NavigationComponent = props => {
             </React.Fragment>
           )}
         </ul>
-        {authUser && (
-          <div>
-            <Link to={ROUTES.ACCOUNT.path} style={{ marginRight: '.5rem' }}>
-              {ROUTES.ACCOUNT.label}
-            </Link>
-            <SignOutButton />
-          </div>
-        )}
+        {authUser && <SignOutButton />}
       </nav>
       <hr />
     </React.Fragment>
