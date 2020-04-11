@@ -8,7 +8,7 @@ import {
   formStyle
 } from '../../auth-screens/auth-screen-styles';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   error: null
@@ -46,7 +46,8 @@ export class PasswordChangeFormComponent extends Component {
         this.setState({ ...INITIAL_STATE });
       })
       .catch(error => {
-        this.setState({ error });
+        this.setState({ ...INITIAL_STATE, error });
+        throw error;
       });
 
     event.preventDefault();
