@@ -5,7 +5,7 @@ import { withFirebase } from '../../../../firebase';
 import { ROUTES } from '../../../../../constants/routes';
 import { inputStyle, buttonStyle, formStyle } from '../../auth-screen-styles';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   username: '',
   email: '',
   passwordOne: '',
@@ -37,8 +37,7 @@ export class SignUpFormComponent extends Component {
   }
 
   handleOnSubmit(event) {
-    // eslint-disable-next-line no-unused-vars
-    const { username, email, passwordOne } = this.state;
+    const { email, passwordOne } = this.state;
     const { firebase, history } = this.props;
     firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -48,6 +47,7 @@ export class SignUpFormComponent extends Component {
       })
       .catch(error => {
         this.setState({ error });
+        throw error;
       });
     event.preventDefault();
   }

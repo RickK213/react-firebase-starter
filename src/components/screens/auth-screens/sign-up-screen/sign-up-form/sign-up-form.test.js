@@ -1,34 +1,74 @@
-/* global React, shallow */
-import ShallowRenderer from 'react-test-renderer/shallow';
-import { createMemoryHistory } from 'history';
-import { SignUpFormComponent } from './sign-up-form';
+/* global React, create, shallow */
+import { ROUTES } from '../../../../../constants/routes';
+import { INITIAL_STATE, SignUpFormComponent } from './sign-up-form';
 
 describe('<SignUpFormComponent />', () => {
-  const renderer = new ShallowRenderer();
-  const history = createMemoryHistory({ keyLength: 0 });
-
   it('should render correctly', () => {
-    renderer.render(<SignUpFormComponent history={history} />);
-    const component = renderer.getRenderOutput();
+    const component = create(<SignUpFormComponent />).toJSON();
     expect(component).toMatchSnapshot();
   });
 
-  describe('this.handleOnChange', () => {
+  describe('handleOnChange', () => {
     it('should return undefined if event is not set', () => {
       const component = shallow(<SignUpFormComponent />);
-      const result = component.instance().handleOnChange();
-      expect(result).toEqual(undefined);
+      const results = component.instance().handleOnChange();
+      expect(results).toEqual(undefined);
     });
 
     it('should call this.setState with the correct arguments if event is set', () => {
-      const event = {
-        target: { name: 'testName', value: 'testValue' }
-      };
+      const event = { target: { name: 'testName', value: 'testValue' } };
       const setState = jest.fn();
       const component = shallow(<SignUpFormComponent />);
       component.instance().setState = setState;
       component.instance().handleOnChange(event);
-      expect(setState).toHaveBeenCalledWith({ testName: 'testValue' });
+      expect(setState).toHaveBeenCalledWith({
+        [event.target.name]: event.target.value
+      });
+    });
+  });
+
+  describe('handleOnSubmit', () => {
+    it('should call this.setState, history.push, and event.preventDefault() if firebase call succeeds', async () => {
+      const push = jest.fn();
+      const history = { push };
+      const doCreateUserWithEmailAndPassword = jest
+        .fn()
+        .mockResolvedValue('default');
+      const firebase = { doCreateUserWithEmailAndPassword };
+      const setState = jest.fn();
+      const preventDefault = jest.fn();
+      const event = { preventDefault };
+      const component = shallow(
+        <SignUpFormComponent firebase={firebase} history={history} />
+      );
+      component.instance().setState = setState;
+      await component.instance().handleOnSubmit(event);
+      expect(setState).toHaveBeenCalledWith({ ...INITIAL_STATE });
+      expect(push).toHaveBeenCalledWith(ROUTES.HOME.path);
+      expect(preventDefault).toHaveBeenCalled();
+    });
+
+    it('should call this.setState with the correct arguments and event.preventDefault() if firebase call fails', async () => {
+      const testError = 'testError';
+      const doCreateUserWithEmailAndPassword = jest
+        .fn()
+        .mockRejectedValue(testError);
+      const firebase = {
+        doCreateUserWithEmailAndPassword
+      };
+      const setState = jest.fn();
+      const preventDefault = jest.fn();
+      const event = { preventDefault };
+      const component = shallow(<SignUpFormComponent firebase={firebase} />);
+      component.instance().setState = setState;
+      try {
+        await component.instance().handleOnSubmit(event);
+      } catch (error) {
+        expect(setState).toHaveBeenCalledWith({
+          error: testError
+        });
+      }
+      expect(preventDefault).toHaveBeenCalled();
     });
   });
 });
