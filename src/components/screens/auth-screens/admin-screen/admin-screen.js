@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 import { withFirebase } from '../../../firebase';
 
 const cellStyle = {
@@ -31,10 +32,12 @@ class AdminScreenComponent extends Component {
     firebase.users().on('value', snapshot => {
       const usersObject = snapshot.val();
 
-      const users = Object.keys(usersObject).map(key => ({
-        ...usersObject[key],
-        uid: key
-      }));
+      const users = !isEmpty(usersObject)
+        ? Object.keys(usersObject).map(key => ({
+            ...usersObject[key],
+            uid: key
+          }))
+        : [];
 
       this.setState({ isLoading: false, users });
     });
@@ -49,12 +52,16 @@ class AdminScreenComponent extends Component {
     const { users } = this.state;
 
     const userRows = users.map(user => {
-      const { email, username, uid } = user;
+      const { email, username, uid, roles } = user;
+      const roleLabel = !isEmpty(roles)
+        ? Object.keys(roles).join(', ')
+        : 'No roles found.';
 
       return (
         <tr key={uid}>
           <td style={cellStyle}>{email}</td>
           <td style={cellStyle}>{username}</td>
+          <td style={cellStyle}>{roleLabel}</td>
         </tr>
       );
     });
@@ -69,19 +76,23 @@ class AdminScreenComponent extends Component {
           fontSize: '0.9rem'
         }}
       >
-        <tr>
-          <th style={cellStyle}>Email</th>
-          <th style={cellStyle}>Username</th>
-        </tr>
-        {userRows}
+        <thead>
+          <tr>
+            <th style={cellStyle}>Email</th>
+            <th style={cellStyle}>Username</th>
+            <th style={cellStyle}>Roles</th>
+          </tr>
+        </thead>
+        <tbody>{userRows}</tbody>
       </table>
     );
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, users } = this.state;
 
     const usersTable = this.renderUsersTable();
+    const usersExist = Boolean(users.length);
 
     return (
       <div>
@@ -93,7 +104,13 @@ class AdminScreenComponent extends Component {
             <p>
               <strong>Users:</strong>
             </p>
-            {usersTable}
+            {usersExist ? (
+              usersTable
+            ) : (
+              <p>
+                <em>No users found.</em>
+              </p>
+            )}
           </React.Fragment>
         )}
       </div>
