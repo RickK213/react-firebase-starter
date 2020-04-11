@@ -5,7 +5,7 @@ import { ROUTES } from '../../../../../constants/routes';
 import { withFirebase } from '../../../../firebase/index';
 import { inputStyle, buttonStyle, formStyle } from '../../auth-screen-styles';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   email: '',
   password: '',
   error: null

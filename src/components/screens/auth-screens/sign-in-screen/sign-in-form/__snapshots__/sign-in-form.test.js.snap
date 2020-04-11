@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SignInFormComponent /> should render correctly 1`] = `
+<form
+  autoComplete="off"
+  onSubmit={[Function]}
+  style={
+    Object {
+      "width": "360px",
+    }
+  }
+>
+  <input
+    autoComplete="off"
+    name="email"
+    onChange={[Function]}
+    placeholder="Email Address"
+    style={
+      Object {
+        "display": "block",
+        "marginBottom": "1rem",
+        "padding": ".5rem",
+        "width": "100%",
+      }
+    }
+    type="email"
+    value=""
+  />
+  <input
+    autoComplete="off"
+    name="password"
+    onChange={[Function]}
+    placeholder="Password"
+    style={
+      Object {
+        "display": "block",
+        "marginBottom": "1rem",
+        "padding": ".5rem",
+        "width": "100%",
+      }
+    }
+    type="password"
+    value=""
+  />
+  <button
+    disabled={true}
+    style={
+      Object {
+        "padding": ".5rem",
+        "textTransform": "uppercase",
+      }
+    }
+    type="submit"
+  >
+    Sign In
+  </button>
+</form>
+`;
