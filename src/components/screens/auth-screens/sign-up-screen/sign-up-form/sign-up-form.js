@@ -43,7 +43,7 @@ export class SignUpFormComponent extends Component {
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        history.push(ROUTES.HOME.path);
+        history.push(ROUTES.ACCOUNT.path);
       })
       .catch(error => {
         this.setState({ error });

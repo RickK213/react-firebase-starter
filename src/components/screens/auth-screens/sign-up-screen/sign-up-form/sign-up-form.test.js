@@ -44,7 +44,7 @@ describe('<SignUpFormComponent />', () => {
       component.instance().setState = setState;
       await component.instance().handleOnSubmit(event);
       expect(setState).toHaveBeenCalledWith({ ...INITIAL_STATE });
-      expect(push).toHaveBeenCalledWith(ROUTES.HOME.path);
+      expect(push).toHaveBeenCalledWith(ROUTES.ACCOUNT.path);
       expect(preventDefault).toHaveBeenCalled();
     });
 
