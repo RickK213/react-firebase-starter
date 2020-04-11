@@ -8,6 +8,7 @@ import { HomeScreen } from '../screens/home-screen/home-screen';
 import { AccountScreen } from '../screens/auth-screens/account-screen/account-screen';
 import { withAuthentication } from '../session';
 import { PasswordForgetScreen } from '../screens/auth-screens/password-forget-screen/password-forget-screen';
+import { AdminScreen } from '../screens/auth-screens/admin-screen/admin-screen';
 
 export const AppComponent = () => {
   return (
@@ -30,6 +31,9 @@ export const AppComponent = () => {
           </Route>
           <Route path={ROUTES.ACCOUNT.path}>
             <AccountScreen />
+          </Route>
+          <Route path={ROUTES.ADMIN.path}>
+            <AdminScreen />
           </Route>
           <Route path={ROUTES.HOME.path}>
             <HomeScreen />

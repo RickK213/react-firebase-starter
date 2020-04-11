@@ -1,4 +1,5 @@
 export const ROUTES = {
+  ADMIN: { label: 'Admin', path: '/admin' },
   ACCOUNT: { label: 'Account', path: '/account' },
   HOME: { label: 'Home', path: '/' },
   PASSWORD_FORGET: {

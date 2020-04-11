@@ -37,11 +37,18 @@ export const NavigationComponent = props => {
             </Link>
           </li>
           {authUser ? (
-            <li style={listItemStyle}>
-              <Link style={linkStyle} to={ROUTES.ACCOUNT.path}>
-                {ROUTES.ACCOUNT.label}
-              </Link>
-            </li>
+            <React.Fragment>
+              <li style={listItemStyle}>
+                <Link style={linkStyle} to={ROUTES.ACCOUNT.path}>
+                  {ROUTES.ACCOUNT.label}
+                </Link>
+              </li>
+              <li style={listItemStyle}>
+                <Link style={linkStyle} to={ROUTES.ADMIN.path}>
+                  {ROUTES.ADMIN.label}
+                </Link>
+              </li>
+            </React.Fragment>
           ) : (
             <React.Fragment>
               <li style={listItemStyle}>
