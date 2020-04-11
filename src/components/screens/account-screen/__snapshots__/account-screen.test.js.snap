@@ -2,22 +2,89 @@
 
 exports[`<AccountScreen /> should render correctly 1`] = `
 <div>
-  <h2>
-    Account
-  </h2>
-  <p>
-    <strong>
-      Email Address:
-    </strong>
-    <span
+  <div>
+    <h2>
+      Account
+    </h2>
+    <p
       style={
         Object {
-          "marginLeft": ".5rem",
+          "marginBottom": "1.5rem",
         }
       }
     >
-      
-    </span>
-  </p>
+      <strong>
+        Email Address:
+      </strong>
+      <span
+        style={
+          Object {
+            "marginLeft": ".5rem",
+          }
+        }
+      >
+        
+      </span>
+    </p>
+    <p>
+      <strong>
+        Change Password:
+      </strong>
+    </p>
+    <form
+      autoComplete="off"
+      onSubmit={[Function]}
+      style={
+        Object {
+          "width": "360px",
+        }
+      }
+    >
+      <input
+        autoComplete="off"
+        name="passwordOne"
+        onChange={[Function]}
+        placeholder="New Password"
+        style={
+          Object {
+            "display": "block",
+            "marginBottom": "1rem",
+            "padding": ".5rem",
+            "width": "100%",
+          }
+        }
+        type="password"
+        value=""
+      />
+      <input
+        autoComplete="off"
+        name="passwordTwo"
+        onChange={[Function]}
+        placeholder="Confirm New Password"
+        style={
+          Object {
+            "display": "block",
+            "marginBottom": "1rem",
+            "padding": ".5rem",
+            "width": "100%",
+          }
+        }
+        type="password"
+        value=""
+      />
+      <button
+        disabled={true}
+        style={
+          Object {
+            "padding": ".5rem",
+            "textTransform": "uppercase",
+          }
+        }
+        type="submit"
+      >
+        Change My Password
+      </button>
+    </form>
+  </div>
 </div>
 `;
