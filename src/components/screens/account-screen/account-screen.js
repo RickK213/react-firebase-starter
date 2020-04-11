@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { AuthUserContext } from '../../session';
+import { PasswordChangeForm } from './password-change-form/password-change-form';
 
-export const AccountScreen = props => {
+export const AccountScreenComponent = props => {
   const { authUser } = props;
   const emailLabel = authUser ? authUser.email : '';
 
@@ -12,14 +14,26 @@ export const AccountScreen = props => {
         <strong>Email Address:</strong>
         <span style={{ marginLeft: '.5rem' }}>{emailLabel}</span>
       </p>
+      <p>
+        <strong>Change Password:</strong>
+      </p>
+      <PasswordChangeForm />
     </div>
   );
 };
 
-AccountScreen.propTypes = {
+AccountScreenComponent.propTypes = {
   authUser: PropTypes.object
 };
 
-AccountScreen.defaultProps = {
+AccountScreenComponent.defaultProps = {
   authUser: null
 };
+
+export const AccountScreen = () => (
+  <div>
+    <AuthUserContext.Consumer>
+      {authUser => <AccountScreenComponent authUser={authUser} />}
+    </AuthUserContext.Consumer>
+  </div>
+);

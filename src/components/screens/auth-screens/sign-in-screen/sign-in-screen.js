@@ -9,7 +9,9 @@ export const SignInScreen = () => {
       <h2>Sign In</h2>
       <SignInForm />
       <p>
-        <Link to={ROUTES.PASSWORD_FORGET.path}>Forgot Password?</Link>
+        <Link to={ROUTES.PASSWORD_FORGET.path}>
+          {ROUTES.PASSWORD_FORGET.label}
+        </Link>
       </p>
     </div>
   );
