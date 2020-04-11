@@ -6,11 +6,19 @@ export const HomeScreen = () => {
 
   return (
     <div>
-      <code>
-        Version&nbsp;
-        {version}
-      </code>
-      <h2>{greeting}</h2>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: '20px'
+        }}
+      >
+        <h2 style={{ marginTop: 0 }}>{greeting}</h2>
+        <code>
+          Version&nbsp;
+          {version}
+        </code>
+      </div>
       <h4>
         <span role="img" aria-label="Under Construction">
           ⚠️
