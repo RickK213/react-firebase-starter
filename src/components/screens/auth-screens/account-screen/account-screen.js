@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AuthUserContext } from '../../../session';
+import { AuthUserContext, withAuthorization } from '../../../session';
 import { PasswordChangeForm } from './password-change-form/password-change-form';
 
 export const AccountScreenComponent = props => {
@@ -30,10 +30,16 @@ AccountScreenComponent.defaultProps = {
   authUser: null
 };
 
-export const AccountScreen = () => (
+const AccountScreenWithContext = () => (
   <div>
     <AuthUserContext.Consumer>
       {authUser => <AccountScreenComponent authUser={authUser} />}
     </AuthUserContext.Consumer>
   </div>
+);
+
+const condition = authUser => !!authUser;
+
+export const AccountScreen = withAuthorization(condition)(
+  AccountScreenWithContext
 );
