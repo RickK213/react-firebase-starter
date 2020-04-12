@@ -15,7 +15,7 @@ export const withAuthentication = Component => {
 
     constructor(props) {
       super(props);
-      this.state = { authUser: null };
+      this.state = { authUser: JSON.parse(localStorage.getItem('authUser')) };
 
       const today = new Date();
       const options = { weekday: 'long' };
@@ -30,9 +30,11 @@ export const withAuthentication = Component => {
       // firebase.onAuthUserListener takes in 'next' and 'fallback' functions:
       this.authListener = firebase.onAuthUserListener(
         authUser => {
+          localStorage.setItem('authUser', JSON.stringify(authUser));
           this.setState({ authUser });
         },
         () => {
+          localStorage.removeItem('authUser');
           this.setState({ authUser: null });
         }
       );
