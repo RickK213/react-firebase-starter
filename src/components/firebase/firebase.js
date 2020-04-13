@@ -1,5 +1,8 @@
 import app from 'firebase/app';
-import { FIREBASE_CONFIG } from '../../../private/firebase-config';
+import {
+  FIREBASE_CONFIG,
+  CONFIRMATION_EMAIL_REDIRECT
+} from '../../../private/firebase-config';
 import 'firebase/auth';
 import 'firebase/database';
 
@@ -31,6 +34,11 @@ class Firebase {
 
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 
+  doSendEmailVerification = () =>
+    this.auth.currentUser.sendEmailVerification({
+      url: CONFIRMATION_EMAIL_REDIRECT
+    });
+
   // *** Merge Auth and DB User API *** //
   onAuthUserListener = (next, fallback) =>
     this.auth.onAuthStateChanged(authUser => {
@@ -47,6 +55,8 @@ class Firebase {
             const mergedUser = {
               uid: authUser.uid,
               email: authUser.email,
+              emailVerified: authUser.emailVerified,
+              providerData: authUser.providerData,
               ...dbUser
             };
             next(mergedUser);

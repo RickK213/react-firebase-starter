@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
+import { compose } from 'recompose';
 import { withFirebase } from '../../../firebase';
 import { withAuthorization } from '../../../session/with-authorization';
 import { ROLES } from '../../../../constants/roles';
+import { withEmailVerification } from '../../../session';
 
 const cellStyle = {
   border: '1px solid lightGray',
@@ -125,6 +127,8 @@ class AdminScreenComponent extends Component {
 
 const condition = authUser => authUser && authUser.roles.includes(ROLES.ADMIN);
 
-export const AdminScreen = withAuthorization(condition)(
-  withFirebase(AdminScreenComponent)
-);
+export const AdminScreen = compose(
+  withEmailVerification,
+  withAuthorization(condition),
+  withFirebase
+)(AdminScreenComponent);

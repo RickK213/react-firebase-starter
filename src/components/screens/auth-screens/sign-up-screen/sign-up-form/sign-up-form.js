@@ -61,6 +61,9 @@ export class SignUpFormComponent extends Component {
         return firebase.user(authUser.user.uid).set({ email, roles, username });
       })
       .then(() => {
+        return firebase.doSendEmailVerification();
+      })
+      .then(() => {
         this.setState({ ...INITIAL_STATE });
         history.push(ROUTES.ACCOUNT.path);
       })

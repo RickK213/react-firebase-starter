@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AuthUserContext, withAuthorization } from '../../../session';
+import { compose } from 'recompose';
+import {
+  AuthUserContext,
+  withAuthorization,
+  withEmailVerification
+} from '../../../session';
 import { PasswordChangeForm } from './password-change-form/password-change-form';
 
 export const AccountScreenComponent = props => {
@@ -40,6 +45,7 @@ const AccountScreenWithContext = () => (
 
 const condition = authUser => !!authUser;
 
-export const AccountScreen = withAuthorization(condition)(
-  AccountScreenWithContext
-);
+export const AccountScreen = compose(
+  withEmailVerification,
+  withAuthorization(condition)
+)(AccountScreenWithContext);
