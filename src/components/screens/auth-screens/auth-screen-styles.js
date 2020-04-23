@@ -13,3 +13,10 @@ export const buttonStyle = {
   padding: '.5rem',
   textTransform: 'uppercase'
 };
+
+export const cellStyle = {
+  border: '1px solid lightGray',
+  borderBottom: 'none',
+  borderRight: 'none',
+  padding: '0.5rem'
+};

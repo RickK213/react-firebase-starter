@@ -1,0 +1,155 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withFirebase } from '../../../firebase';
+import {
+  inputStyle,
+  cellStyle,
+  buttonStyle
+} from '../../auth-screens/auth-screen-styles';
+
+export class ToDoListComponent extends Component {
+  static propTypes = {
+    firebase: PropTypes.object
+  };
+
+  static defaultProps = {
+    firebase: {}
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      toDos: []
+    };
+    this.handleUpdateName = this.handleUpdateName.bind(this);
+    this.handleDeleteToDo = this.handleDeleteToDo.bind(this);
+    this.handleToggleIsComplete = this.handleToggleIsComplete.bind(this);
+  }
+
+  componentDidMount() {
+    const { firebase } = this.props;
+    this.setState({ isLoading: true });
+    firebase.toDos().on('value', snapshot => {
+      const toDosObject = snapshot.val();
+      if (toDosObject) {
+        const toDos = Object.keys(toDosObject).map(key => ({
+          ...toDosObject[key],
+          uid: key
+        }));
+        this.setState({ toDos });
+      }
+      this.setState({ isLoading: false });
+    });
+  }
+
+  componentWillUnmount() {
+    const { firebase } = this.props;
+    firebase.toDos().off();
+  }
+
+  handleUpdateName(name, uid) {
+    const { firebase } = this.props;
+    firebase.toDo(uid).update({ name });
+  }
+
+  handleToggleIsComplete(isComplete, uid) {
+    const { firebase } = this.props;
+    firebase.toDo(uid).update({ isComplete });
+  }
+
+  handleDeleteToDo(event, uid) {
+    const { firebase } = this.props;
+    firebase.toDo(uid).remove();
+  }
+
+  renderToDos() {
+    const { toDos } = this.state;
+    const toDoRows = toDos.map(toDo => {
+      const { name, isComplete, uid } = toDo;
+      return (
+        <tr key={uid}>
+          <td style={cellStyle}>
+            <input
+              type="text"
+              value={name}
+              onChange={event =>
+                // eslint-disable-next-line prettier/prettier
+              this.handleUpdateName(event.target.value, uid)}
+              style={{
+                ...inputStyle,
+                width: 'auto',
+                display: 'inline',
+                margin: 0
+              }}
+            />
+          </td>
+          <td style={{ ...cellStyle, textAlign: 'center' }}>
+            <input
+              type="checkbox"
+              checked={isComplete}
+              onChange={event =>
+                // eslint-disable-next-line prettier/prettier
+              this.handleToggleIsComplete(event.target.checked, uid)}
+            />
+          </td>
+          <td style={cellStyle}>
+            <button
+              type="button"
+              onClick={event => this.handleDeleteToDo(event, uid)}
+              style={{
+                ...buttonStyle,
+                background: 'red',
+                color: 'white',
+                border: 'none'
+              }}
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      );
+    });
+    return (
+      <table
+        style={{
+          textAlign: 'left',
+          borderSpacing: 0,
+          borderBottom: '1px solid lightGray',
+          borderRight: '1px solid lightGray',
+          fontSize: '0.9rem'
+        }}
+      >
+        <thead>
+          <tr>
+            <th style={cellStyle}>Name</th>
+            <th style={{ ...cellStyle, textAlign: 'center' }}>Completed</th>
+            <th style={cellStyle}>Action</th>
+          </tr>
+        </thead>
+        <tbody>{toDoRows}</tbody>
+      </table>
+    );
+  }
+
+  render() {
+    const { isLoading, toDos } = this.state;
+    const toDosTable = this.renderToDos();
+    const toDosExist = toDos.length > 0;
+
+    return (
+      <div>
+        {isLoading && <p>Loading...</p>}
+        {toDosExist ? (
+          <div>{toDosTable}</div>
+        ) : (
+          <p>
+            <em>No To Dos found.</em>
+          </p>
+        )}
+      </div>
+    );
+  }
+}
+
+export const ToDoList = withFirebase(ToDoListComponent);

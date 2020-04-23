@@ -4,13 +4,7 @@ import { isEmpty } from 'lodash';
 import { Link } from 'react-router-dom';
 import { withFirebase } from '../../../../firebase';
 import { ROUTES } from '../../../../../constants/routes';
-
-const cellStyle = {
-  border: '1px solid lightGray',
-  borderBottom: 'none',
-  borderRight: 'none',
-  padding: '0.5rem'
-};
+import { cellStyle } from '../../auth-screen-styles';
 
 class UserListComponent extends Component {
   static propTypes = {
