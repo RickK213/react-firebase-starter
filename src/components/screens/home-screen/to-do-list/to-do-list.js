@@ -151,17 +151,19 @@ export class ToDoListComponent extends Component {
   render() {
     const { isLoading, toDos } = this.state;
     const toDosTable = this.renderToDos();
-    const toDosExist = toDos.length > 0;
+    const toDoCount = toDos.length;
+    const toDosExist = toDoCount > 0;
 
     return (
       <div>
         {isLoading && <p>Loading...</p>}
-        {toDosExist ? (
-          <div>{toDosTable}</div>
-        ) : (
-          <p>
-            <em>No To Dos found.</em>
-          </p>
+        {toDosExist && (
+          <div>
+            <p>
+              <em>{toDoCount} results</em>
+            </p>
+            {toDosTable}
+          </div>
         )}
       </div>
     );
