@@ -5,10 +5,12 @@ import { buttonStyle, inputStyle } from '../../auth-screens/auth-screen-styles';
 
 export class AddToDoFormComponent extends Component {
   static propTypes = {
+    authUser: PropTypes.object,
     firebase: PropTypes.object
   };
 
   static defaultProps = {
+    authUser: {},
     firebase: {}
   };
 
@@ -31,11 +33,13 @@ export class AddToDoFormComponent extends Component {
   }
 
   handleCreateToDo(event) {
-    const { firebase } = this.props;
+    const { authUser, firebase } = this.props;
     const { toDoName } = this.state;
     if (!event || !toDoName) return;
 
-    firebase.toDos().push({ name: toDoName, isComplete: false });
+    const { uid } = authUser;
+
+    firebase.toDos().push({ name: toDoName, isComplete: false, userId: uid });
 
     event.preventDefault();
     this.setState({ toDoName: '' });

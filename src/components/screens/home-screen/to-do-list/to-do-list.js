@@ -9,10 +9,12 @@ import {
 
 export class ToDoListComponent extends Component {
   static propTypes = {
+    authUser: PropTypes.object,
     firebase: PropTypes.object
   };
 
   static defaultProps = {
+    authUser: {},
     firebase: {}
   };
 
@@ -64,13 +66,18 @@ export class ToDoListComponent extends Component {
   }
 
   renderToDos() {
+    const { authUser } = this.props;
     const { toDos } = this.state;
     const toDoRows = toDos.map(toDo => {
-      const { name, isComplete, uid } = toDo;
+      const { name, isComplete, uid, userId } = toDo;
+      const { uid: authUserUid } = authUser;
+      const disabled = authUserUid !== userId;
+
       return (
         <tr key={uid}>
           <td style={cellStyle}>
             <input
+              disabled={disabled}
               type="text"
               value={name}
               onChange={event =>
@@ -80,28 +87,35 @@ export class ToDoListComponent extends Component {
                 ...inputStyle,
                 width: 'auto',
                 display: 'inline',
-                margin: 0
+                margin: 0,
+                cursor: disabled ? 'not-allowed' : 'auto'
               }}
             />
           </td>
           <td style={{ ...cellStyle, textAlign: 'center' }}>
             <input
+              disabled={disabled}
               type="checkbox"
               checked={isComplete}
               onChange={event =>
                 // eslint-disable-next-line prettier/prettier
               this.handleToggleIsComplete(event.target.checked, uid)}
+              style={{
+                cursor: disabled ? 'not-allowed' : 'auto'
+              }}
             />
           </td>
           <td style={cellStyle}>
             <button
+              disabled={disabled}
               type="button"
               onClick={event => this.handleDeleteToDo(event, uid)}
               style={{
                 ...buttonStyle,
                 background: 'red',
                 color: 'white',
-                border: 'none'
+                border: 'none',
+                cursor: disabled ? 'not-allowed' : 'auto'
               }}
             >
               Delete

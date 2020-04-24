@@ -57,8 +57,8 @@ export class HomeScreenComponent extends Component {
         </div>
         <p>This screen is viewable by all authenticated users.</p>
         <h4>To Dos:</h4>
-        <AddToDoForm />
-        <ToDoList />
+        <AddToDoForm authUser={authUser} />
+        <ToDoList authUser={authUser} />
       </div>
     );
   }
