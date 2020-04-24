@@ -39,7 +39,7 @@ export class AddToDoFormComponent extends Component {
 
     const { uid } = authUser;
 
-    firebase.toDos().push({ name: toDoName, isComplete: false, userId: uid });
+    firebase.toDos().add({ name: toDoName, isComplete: false, userId: uid });
 
     event.preventDefault();
     this.setState({ toDoName: '' });

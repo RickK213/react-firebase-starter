@@ -32,22 +32,21 @@ export class ToDoListComponent extends Component {
   componentDidMount() {
     const { firebase } = this.props;
     this.setState({ isLoading: true });
-    firebase.toDos().on('value', snapshot => {
-      const toDosObject = snapshot.val();
-      if (toDosObject) {
-        const toDos = Object.keys(toDosObject).map(key => ({
-          ...toDosObject[key],
-          uid: key
-        }));
-        this.setState({ toDos });
+    this.unsubscribe = firebase.toDos().onSnapshot(snapshot => {
+      if (snapshot.size) {
+        const toDos = [];
+        snapshot.forEach(doc => {
+          toDos.push({ ...doc.data(), uid: doc.id });
+        });
+        this.setState({ toDos, isLoading: false });
+      } else {
+        this.setState({ toDos: [], isLoading: false });
       }
-      this.setState({ isLoading: false });
     });
   }
 
   componentWillUnmount() {
-    const { firebase } = this.props;
-    firebase.toDos().off();
+    this.unsubscribe();
   }
 
   handleUpdateName(name, uid) {
@@ -62,7 +61,7 @@ export class ToDoListComponent extends Component {
 
   handleDeleteToDo(event, uid) {
     const { firebase } = this.props;
-    firebase.toDo(uid).remove();
+    firebase.toDo(uid).delete();
   }
 
   renderToDos() {

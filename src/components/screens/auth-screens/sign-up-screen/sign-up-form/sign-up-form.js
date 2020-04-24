@@ -58,7 +58,11 @@ export class SignUpFormComponent extends Component {
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
         // Create a user in the firebase realtime db:
-        return firebase.user(authUser.user.uid).set({ email, roles, username });
+        // Adding 'merge' option in case we add future log-in methods,
+        // it will merge with an existing user doc
+        return firebase
+          .user(authUser.user.uid)
+          .set({ email, roles, username }, { merge: true });
       })
       .then(() => {
         return firebase.doSendEmailVerification();

@@ -27,6 +27,10 @@ export const withEmailVerification = Component => {
     constructor(props) {
       super(props);
       this.state = { isSent: false };
+
+      this.handleSendEmailVerification = this.handleSendEmailVerification.bind(
+        this
+      );
     }
 
     handleSendEmailVerification() {

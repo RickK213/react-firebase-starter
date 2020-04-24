@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
 import { Link } from 'react-router-dom';
 import { withFirebase } from '../../../../firebase';
 import { ROUTES } from '../../../../../constants/routes';
@@ -25,23 +24,18 @@ class UserListComponent extends Component {
     const { firebase } = this.props;
     this.setState({ isLoading: true });
 
-    firebase.users().on('value', snapshot => {
-      const usersObject = snapshot.val();
-
-      const users = !isEmpty(usersObject)
-        ? Object.keys(usersObject).map(key => ({
-            ...usersObject[key],
-            uid: key
-          }))
-        : [];
+    this.unsubscribe = firebase.users().onSnapshot(snapshot => {
+      const users = [];
+      snapshot.forEach(doc => {
+        users.push({ ...doc.data(), uid: doc.id });
+      });
 
       this.setState({ isLoading: false, users });
     });
   }
 
   componentWillUnmount() {
-    const { firebase } = this.props;
-    firebase.users().off();
+    this.unsubscribe();
   }
 
   renderUsersTable() {

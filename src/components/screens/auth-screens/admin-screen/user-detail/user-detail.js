@@ -36,15 +36,13 @@ export class UserDetailComponent extends Component {
     this.setState({ isLoading: true });
 
     const userId = this.getUserId();
-    firebase.user(userId).on('value', snapshot => {
-      this.setState({ user: snapshot.val(), isLoading: false });
+    this.unsubscribe = firebase.user(userId).onSnapshot(snapshot => {
+      this.setState({ user: snapshot.data(), isLoading: false });
     });
   }
 
   componentWillUnmount() {
-    const { firebase } = this.props;
-    const userId = this.getUserId();
-    firebase.user(userId).off();
+    if (this.unsubscribe) this.unsubscribe();
   }
 
   getUserId() {
