@@ -13,6 +13,7 @@ class Firebase {
       app.initializeApp(FIREBASE_CONFIG);
     }
 
+    this.fieldValue = app.firestore.FieldValue;
     this.auth = app.auth();
     this.db = app.firestore();
   }

@@ -32,17 +32,20 @@ export class ToDoListComponent extends Component {
   componentDidMount() {
     const { firebase } = this.props;
     this.setState({ isLoading: true });
-    this.unsubscribe = firebase.toDos().onSnapshot(snapshot => {
-      if (snapshot.size) {
-        const toDos = [];
-        snapshot.forEach(doc => {
-          toDos.push({ ...doc.data(), uid: doc.id });
-        });
-        this.setState({ toDos, isLoading: false });
-      } else {
-        this.setState({ toDos: [], isLoading: false });
-      }
-    });
+    this.unsubscribe = firebase
+      .toDos()
+      .orderBy('createdAt', 'desc')
+      .onSnapshot(snapshot => {
+        if (snapshot.size) {
+          const toDos = [];
+          snapshot.forEach(doc => {
+            toDos.push({ ...doc.data(), uid: doc.id });
+          });
+          this.setState({ toDos, isLoading: false });
+        } else {
+          this.setState({ toDos: [], isLoading: false });
+        }
+      });
   }
 
   componentWillUnmount() {
