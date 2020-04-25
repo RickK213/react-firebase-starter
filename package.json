@@ -9,6 +9,7 @@
     "eslint:fix": "./node_modules/.bin/eslint src/ --fix && echo \"\\x1b[102m\\x1b[1m ESLINT \\x1b[0m\" ESLint JavaScript errors fixed",
     "start": "./node_modules/.bin/webpack-dev-server --mode development",
     "test": "./node_modules/.bin/jest",
+    "test:changed": "npm run test -o",
     "test:coverage": "npm run test -- --coverage"
   },
   "repository": {
