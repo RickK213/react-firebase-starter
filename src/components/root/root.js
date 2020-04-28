@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import PropTypes from 'prop-types';
 import { App } from '../app/app';
 import Firebase, { FirebaseContext } from '../firebase';
 
@@ -16,7 +17,7 @@ export const Root = props => {
 };
 
 Root.propTypes = {
-  store: Provider.propTypes.store
+  store: PropTypes.object
 };
 
 Root.defaultProps = {
