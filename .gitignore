@@ -5,3 +5,4 @@ npm-debug.*
 private/
 .firebase/
 firestore-debug.log
+firebase-debug.log
