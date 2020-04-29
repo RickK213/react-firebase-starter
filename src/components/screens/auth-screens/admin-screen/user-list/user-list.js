@@ -1,27 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { withFirebase } from '../../../../firebase';
 import { ROUTES } from '../../../../../constants/routes';
 import { cellStyle } from '../../auth-screen-styles';
+import { updateUsers, selectUsers } from '../../../../../store/users/users';
 
 class UserListComponent extends Component {
   static propTypes = {
-    firebase: PropTypes.object
+    firebase: PropTypes.object,
+    onUpdateUsers: PropTypes.func,
+    users: PropTypes.array
   };
 
   static defaultProps = {
-    firebase: {}
+    firebase: {},
+    onUpdateUsers: () => {},
+    users: []
   };
 
   constructor(props) {
     super(props);
 
-    this.state = { isLoading: false, users: [] };
+    this.state = { isLoading: false };
   }
 
   componentDidMount() {
-    const { firebase } = this.props;
+    const { firebase, onUpdateUsers } = this.props;
     this.setState({ isLoading: true });
 
     this.unsubscribe = firebase.users().onSnapshot(snapshot => {
@@ -30,7 +37,8 @@ class UserListComponent extends Component {
         users.push({ ...doc.data(), uid: doc.id });
       });
 
-      this.setState({ isLoading: false, users });
+      onUpdateUsers(users);
+      this.setState({ isLoading: false });
     });
   }
 
@@ -39,7 +47,7 @@ class UserListComponent extends Component {
   }
 
   renderUsersTable() {
-    const { users } = this.state;
+    const { users } = this.props;
 
     const userRows = users.map(user => {
       const { email, username, uid, roles } = user;
@@ -49,9 +57,7 @@ class UserListComponent extends Component {
         <tr key={uid}>
           <td style={cellStyle}>{email}</td>
           <td style={cellStyle}>
-            <Link
-              to={{ pathname: `${ROUTES.ADMIN.path}/${uid}`, state: { user } }}
-            >
+            <Link to={{ pathname: `${ROUTES.ADMIN.path}/${uid}` }}>
               {username}
             </Link>
           </td>
@@ -83,7 +89,8 @@ class UserListComponent extends Component {
   }
 
   render() {
-    const { isLoading, users } = this.state;
+    const { users } = this.props;
+    const { isLoading } = this.state;
 
     const usersTable = this.renderUsersTable();
     const usersExist = Boolean(users.length);
@@ -111,4 +118,17 @@ class UserListComponent extends Component {
   }
 }
 
-export const UserList = withFirebase(UserListComponent);
+const mapStateToProps = state => ({
+  users: selectUsers(state)
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onUpdateUsers: users => dispatch(updateUsers(users))
+  };
+};
+
+export const UserList = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withFirebase
+)(UserListComponent);

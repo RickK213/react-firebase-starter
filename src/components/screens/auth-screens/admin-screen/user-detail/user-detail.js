@@ -1,34 +1,40 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import { find } from 'lodash';
 import { withFirebase } from '../../../../firebase';
 import { buttonStyle } from '../../auth-screen-styles';
+import { selectUsers, updateUser } from '../../../../../store/users/users';
 
 export class UserDetailComponent extends Component {
   static propTypes = {
     firebase: PropTypes.object,
+    location: PropTypes.object,
     match: PropTypes.object,
-    location: PropTypes.object
+    onUpdateUser: PropTypes.func,
+    user: PropTypes.object
   };
 
   static defaultProps = {
     firebase: {},
+    location: { state: null },
     match: { params: {} },
-    location: { state: null }
+    onUpdateUser: () => {},
+    user: null
   };
 
   constructor(props) {
     super(props);
     const { location } = props;
 
-    this.state = { isLoading: false, user: null, ...location.state };
+    this.state = { isLoading: false, ...location.state };
 
     this.handleSendPasswordReset = this.handleSendPasswordReset.bind(this);
   }
 
   componentDidMount() {
-    const { user } = this.state;
+    const { user, onUpdateUser } = this.props;
     if (user) return;
 
     const { firebase } = this.props;
@@ -37,7 +43,8 @@ export class UserDetailComponent extends Component {
 
     const userId = this.getUserId();
     this.unsubscribe = firebase.user(userId).onSnapshot(snapshot => {
-      this.setState({ user: snapshot.data(), isLoading: false });
+      onUpdateUser({ user: snapshot.data(), uid: userId });
+      this.setState({ isLoading: false });
     });
   }
 
@@ -61,7 +68,8 @@ export class UserDetailComponent extends Component {
   }
 
   render() {
-    const { user, isLoading } = this.state;
+    const { user } = this.props;
+    const { isLoading } = this.state;
 
     if (isLoading) return <span>Loading...</span>;
 
@@ -107,7 +115,21 @@ export class UserDetailComponent extends Component {
   }
 }
 
+const mapStateToProps = (state, props) => {
+  const users = selectUsers(state);
+  const userId = props.match.params.id;
+  const userToFind = find(users, user => user.uid === userId);
+
+  return {
+    user: userToFind
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  onUpdateUser: user => dispatch(updateUser(user))
+});
+
 export const UserDetail = compose(
-  withFirebase,
-  withRouter
+  connect(mapStateToProps, mapDispatchToProps),
+  withFirebase
 )(UserDetailComponent);
