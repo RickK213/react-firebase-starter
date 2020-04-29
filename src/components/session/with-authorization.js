@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { withFirebase } from '../firebase';
 import { ROUTES } from '../../constants/routes';
-import AuthUserContext from './context';
+import { selectAuthUser } from '../../store/auth-user/auth-user';
 
 export const withAuthorization = condition => Component => {
   class WithAuthorization extends React.Component {
@@ -36,16 +38,17 @@ export const withAuthorization = condition => Component => {
     }
 
     render() {
-      return (
-        <AuthUserContext.Consumer>
-          {authUser =>
-            condition(authUser) ? <Component {...this.props} /> : null
-          // eslint-disable-next-line react/jsx-curly-newline
-          }
-        </AuthUserContext.Consumer>
-      );
+      return <Component {...this.props} />;
     }
   }
 
-  return withRouter(withFirebase(WithAuthorization));
+  const mapStateToProps = state => ({
+    authUser: selectAuthUser(state)
+  });
+
+  return compose(
+    withRouter,
+    withFirebase,
+    connect(mapStateToProps)
+  )(WithAuthorization);
 };

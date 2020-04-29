@@ -15,7 +15,10 @@ export const DEFAULT_STATE = null;
 // Reducer
 export const authUserReducer = handleActions(
   {
-    [UPDATE]: (state, { payload: authUser }) => ({ ...state, value: authUser }),
+    [UPDATE]: (state, { payload: authUser }) => {
+      if (!authUser) return DEFAULT_STATE;
+      return { ...authUser };
+    },
     [RESET]: () => ({ ...DEFAULT_STATE })
   },
   DEFAULT_STATE

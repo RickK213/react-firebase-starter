@@ -57,6 +57,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "connected-react-router": "^6.8.0",
     "firebase": "^7.14.0",
     "history": "^4.10.1",
     "lodash": "^4.17.15",

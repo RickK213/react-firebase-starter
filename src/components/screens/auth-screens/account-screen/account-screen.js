@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
+import { connect } from 'react-redux';
 import {
-  AuthUserContext,
-  withAuthorization,
+  // withAuthorization,
   withEmailVerification
 } from '../../../session';
 import { PasswordChangeForm } from './password-change-form/password-change-form';
+import { selectAuthUser } from '../../../../store/auth-user/auth-user';
 
 export const AccountScreenComponent = props => {
   const { authUser } = props;
@@ -35,17 +36,14 @@ AccountScreenComponent.defaultProps = {
   authUser: null
 };
 
-const AccountScreenWithContext = () => (
-  <div>
-    <AuthUserContext.Consumer>
-      {authUser => <AccountScreenComponent authUser={authUser} />}
-    </AuthUserContext.Consumer>
-  </div>
-);
+const mapStateToProps = state => ({
+  authUser: selectAuthUser(state)
+});
 
-const condition = authUser => !!authUser;
+// const condition = authUser => !!authUser;
 
 export const AccountScreen = compose(
-  withEmailVerification,
-  withAuthorization(condition)
-)(AccountScreenWithContext);
+  connect(mapStateToProps),
+  withEmailVerification
+  // withAuthorization(condition)
+)(AccountScreenComponent);

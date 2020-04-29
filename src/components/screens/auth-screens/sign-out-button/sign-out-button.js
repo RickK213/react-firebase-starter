@@ -24,7 +24,7 @@ export class SignOutButtonComponent extends Component {
   handleOnSignOutClick() {
     const { firebase, history } = this.props;
     firebase.doSignOut().then(() => {
-      history.push(ROUTES.HOME.path);
+      history.push(ROUTES.SIGN_IN.path);
     });
   }
 

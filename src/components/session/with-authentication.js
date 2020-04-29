@@ -1,21 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { withFirebase } from '../firebase';
-import AuthUserContext from './context';
+import { updateAuthUser } from '../../store/auth-user/auth-user';
 
 export const withAuthentication = Component => {
   class WithAuthentication extends React.Component {
     static propTypes = {
-      firebase: PropTypes.object
+      firebase: PropTypes.object,
+      onUpdateAuthUser: PropTypes.func
     };
 
     static defaultProps = {
-      firebase: {}
+      firebase: {},
+      onUpdateAuthUser: () => {}
     };
 
     constructor(props) {
       super(props);
-      this.state = { authUser: JSON.parse(localStorage.getItem('authUser')) };
+      const { onUpdateAuthUser } = props;
+
+      onUpdateAuthUser(JSON.parse(localStorage.getItem('authUser')));
 
       const today = new Date();
       const options = { weekday: 'long' };
@@ -25,17 +31,17 @@ export const withAuthentication = Component => {
     }
 
     componentDidMount() {
-      const { firebase } = this.props;
+      const { firebase, onUpdateAuthUser } = this.props;
 
       // firebase.onAuthUserListener takes in 'next' and 'fallback' functions:
       this.authListener = firebase.onAuthUserListener(
         authUser => {
           localStorage.setItem('authUser', JSON.stringify(authUser));
-          this.setState({ authUser });
+          onUpdateAuthUser(authUser);
         },
         () => {
           localStorage.removeItem('authUser');
-          this.setState({ authUser: null });
+          onUpdateAuthUser(null);
         }
       );
     }
@@ -45,14 +51,18 @@ export const withAuthentication = Component => {
     }
 
     render() {
-      const { authUser } = this.state;
-      return (
-        <AuthUserContext.Provider value={authUser}>
-          <Component {...this.props} authUser={authUser} />
-        </AuthUserContext.Provider>
-      );
+      return <Component {...this.props} />;
     }
   }
 
-  return withFirebase(WithAuthentication);
+  const mapStateToProps = undefined;
+
+  const mapDispatchToProps = dispatch => ({
+    onUpdateAuthUser: authUser => dispatch(updateAuthUser(authUser))
+  });
+
+  return compose(
+    withFirebase,
+    connect(mapStateToProps, mapDispatchToProps)
+  )(WithAuthentication);
 };

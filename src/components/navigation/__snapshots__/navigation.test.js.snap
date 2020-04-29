@@ -1,9 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Navigation /> should render correctly 1`] = `
-<div>
-  <Context.Consumer>
-    [Function]
-  </Context.Consumer>
-</div>
+<React.Fragment>
+  <nav
+    style={
+      Object {
+        "display": "flex",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <ul
+      style={
+        Object {
+          "listStyleType": "none",
+          "margin": 0,
+          "overflow": "hidden",
+          "padding": 0,
+        }
+      }
+    >
+      <React.Fragment>
+        <li
+          style={
+            Object {
+              "float": "left",
+            }
+          }
+        >
+          <Link
+            style={
+              Object {
+                "display": "block",
+                "padding": ".5rem 1rem",
+                "textAlign": "center",
+              }
+            }
+            to="/"
+          >
+            Home
+          </Link>
+        </li>
+        <li
+          style={
+            Object {
+              "float": "left",
+            }
+          }
+        >
+          <Link
+            style={
+              Object {
+                "display": "block",
+                "padding": ".5rem 1rem",
+                "textAlign": "center",
+              }
+            }
+            to="/account"
+          >
+            Account
+          </Link>
+        </li>
+      </React.Fragment>
+    </ul>
+    <div>
+      <span
+        style={
+          Object {
+            "marginRight": "1rem",
+          }
+        }
+      >
+        Welcome back, 
+      </span>
+      <withRouter() />
+    </div>
+  </nav>
+  <hr />
+</React.Fragment>
 `;

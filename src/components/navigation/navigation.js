@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ROUTES } from '../../constants/routes';
 import { SignOutButton } from '../screens/auth-screens/sign-out-button/sign-out-button';
-import { AuthUserContext } from '../session';
 import { ROLES } from '../../constants/roles';
 
 const navStyle = { display: 'flex', justifyContent: 'space-between' };
@@ -25,26 +24,26 @@ const linkStyle = {
   padding: '.5rem 1rem'
 };
 
-export const NavigationComponent = props => {
+export const Navigation = props => {
   const { authUser } = props;
 
   return (
     <React.Fragment>
       <nav style={navStyle}>
         <ul style={listStyle}>
-          <li style={listItemStyle}>
-            <Link style={linkStyle} to={ROUTES.HOME.path}>
-              {ROUTES.HOME.label}
-            </Link>
-          </li>
           {authUser ? (
             <React.Fragment>
+              <li style={listItemStyle}>
+                <Link style={linkStyle} to={ROUTES.HOME.path}>
+                  {ROUTES.HOME.label}
+                </Link>
+              </li>
               <li style={listItemStyle}>
                 <Link style={linkStyle} to={ROUTES.ACCOUNT.path}>
                   {ROUTES.ACCOUNT.label}
                 </Link>
               </li>
-              {authUser.roles.includes(ROLES.ADMIN) && (
+              {authUser.roles && authUser.roles.includes(ROLES.ADMIN) && (
                 <li style={listItemStyle}>
                   <Link style={linkStyle} to={ROUTES.ADMIN.path}>
                     {ROUTES.ADMIN.label}
@@ -82,18 +81,10 @@ export const NavigationComponent = props => {
   );
 };
 
-NavigationComponent.propTypes = {
+Navigation.propTypes = {
   authUser: PropTypes.object
 };
 
-NavigationComponent.defaultProps = {
-  authUser: null
+Navigation.defaultProps = {
+  authUser: { roles: [] }
 };
-
-export const Navigation = () => (
-  <div>
-    <AuthUserContext.Consumer>
-      {authUser => <NavigationComponent authUser={authUser} />}
-    </AuthUserContext.Consumer>
-  </div>
-);

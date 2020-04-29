@@ -18,7 +18,7 @@ describe('<SignOutButtonComponent />', () => {
         <SignOutButtonComponent firebase={firebase} history={history} />
       );
       await component.instance().handleOnSignOutClick();
-      expect(push).toHaveBeenCalledWith(ROUTES.HOME.path);
+      expect(push).toHaveBeenCalledWith(ROUTES.SIGN_IN.path);
     });
   });
 });

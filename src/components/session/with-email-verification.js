@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import AuthUserContext from './context';
 import { withFirebase } from '../firebase';
 import { buttonStyle } from '../screens/auth-screens/auth-screen-styles';
+import { selectAuthUser } from '../../store/auth-user/auth-user';
 
 export const withEmailVerification = Component => {
   class WithEmailVerification extends React.Component {
@@ -82,5 +85,10 @@ export const withEmailVerification = Component => {
       );
     }
   }
-  return withFirebase(WithEmailVerification);
+
+  const mapStateToProps = state => ({
+    authUser: selectAuthUser(state)
+  });
+
+  return compose(withFirebase, connect(mapStateToProps))(WithEmailVerification);
 };

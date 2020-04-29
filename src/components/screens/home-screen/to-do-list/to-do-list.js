@@ -70,8 +70,11 @@ export class ToDoListComponent extends Component {
   renderToDos() {
     const { authUser } = this.props;
     const { toDos } = this.state;
+
+    if (!authUser || !toDos) return [];
+
     const toDoRows = toDos.map(toDo => {
-      const { name, isComplete, uid, userId } = toDo;
+      const { name, isComplete, uid, userId, username } = toDo;
       const { uid: authUserUid } = authUser;
       const disabled = authUserUid !== userId;
 
@@ -93,6 +96,9 @@ export class ToDoListComponent extends Component {
                 cursor: disabled ? 'not-allowed' : 'auto'
               }}
             />
+          </td>
+          <td style={cellStyle}>
+            <span>{username}</span>
           </td>
           <td style={{ ...cellStyle, textAlign: 'center' }}>
             <input
@@ -139,6 +145,7 @@ export class ToDoListComponent extends Component {
         <thead>
           <tr>
             <th style={cellStyle}>Name</th>
+            <th style={cellStyle}>Created By</th>
             <th style={{ ...cellStyle, textAlign: 'center' }}>Completed</th>
             <th style={cellStyle}>Action</th>
           </tr>

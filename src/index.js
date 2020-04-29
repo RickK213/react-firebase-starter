@@ -3,20 +3,23 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import thunk from 'redux-thunk';
 import { createStore, compose, applyMiddleware } from 'redux';
+import { createBrowserHistory } from 'history';
 import { Root } from './components/root/root';
-import { rootReducer } from './store';
+import { createRootReducer } from './store';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const history = createBrowserHistory();
+
 const store = createStore(
-  rootReducer,
+  createRootReducer(history),
   composeEnhancers(applyMiddleware(thunk))
 );
 
 const init = Component =>
   render(
     <AppContainer>
-      <Component store={store} />
+      <Component history={history} store={store} />
     </AppContainer>,
     document.getElementById('root')
   );

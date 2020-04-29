@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 import PropTypes from 'prop-types';
-import { name, version } from '../../../../package.json';
-import {
-  AuthUserContext,
-  withAuthorization,
-  withEmailVerification
-} from '../../session';
+import { connect } from 'react-redux';
+import { withEmailVerification, withAuthorization } from '../../session';
 import { ToDoList } from './to-do-list/to-do-list';
 import { AddToDoForm } from './add-to-do-form/add-to-do-form';
+import { selectAuthUser } from '../../../store/auth-user/auth-user';
 
 const daysOfWeek = [
   'Sunday',
@@ -29,32 +26,19 @@ export class HomeScreenComponent extends Component {
   };
 
   static defaultProps = {
-    authUser: null
+    authUser: {}
   };
 
   render() {
-    const { authUser = {} } = this.props;
+    const { authUser } = this.props;
 
-    const { username } = authUser;
+    const username = authUser ? authUser.username : '';
 
     const greeting = `Happy ${dayOfWeek}, ${username}.`;
 
     return (
       <div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: '20px'
-          }}
-        >
-          <h2 style={{ marginTop: 0 }}>{greeting}</h2>
-          <code style={{ textAlign: 'right' }}>
-            {name}
-            {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
-            <br />v{version}
-          </code>
-        </div>
+        <h2>{greeting}</h2>
         <p>This screen is viewable by all authenticated users.</p>
         <h4>To Dos:</h4>
         <AddToDoForm authUser={authUser} />
@@ -64,17 +48,14 @@ export class HomeScreenComponent extends Component {
   }
 }
 
-const HomeScreenWithContext = () => (
-  <div>
-    <AuthUserContext.Consumer>
-      {authUser => <HomeScreenComponent authUser={authUser} />}
-    </AuthUserContext.Consumer>
-  </div>
-);
+const mapStateToProps = state => ({
+  authUser: selectAuthUser(state)
+});
 
 const condition = authUser => !!authUser;
 
 export const HomeScreen = compose(
+  connect(mapStateToProps),
   withEmailVerification,
   withAuthorization(condition)
-)(HomeScreenWithContext);
+)(HomeScreenComponent);

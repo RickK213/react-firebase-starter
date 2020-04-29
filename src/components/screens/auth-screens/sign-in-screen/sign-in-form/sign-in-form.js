@@ -43,7 +43,7 @@ export class SignInFormComponent extends Component {
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        history.push(ROUTES.ACCOUNT.path);
+        history.push(ROUTES.HOME.path);
       })
       .catch(error => {
         this.setState({ error });
