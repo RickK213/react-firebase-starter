@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
 import { withFirebase } from '../../../firebase';
 import {
   inputStyle,
   cellStyle,
   buttonStyle
 } from '../../auth-screens/auth-screen-styles';
+import { selectToDos, updateToDos } from '../../../../store/toDos/toDos';
 
 export class ToDoListComponent extends Component {
   static propTypes = {
     authUser: PropTypes.object,
-    firebase: PropTypes.object
+    firebase: PropTypes.object,
+    toDos: PropTypes.array,
+    onUpdateToDos: PropTypes.func
   };
 
   static defaultProps = {
     authUser: {},
-    firebase: {}
+    firebase: {},
+    toDos: [],
+    onUpdateToDos: () => {}
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false,
-      toDos: []
+      isLoading: false
     };
     this.handleUpdateName = this.handleUpdateName.bind(this);
     this.handleDeleteToDo = this.handleDeleteToDo.bind(this);
@@ -30,7 +36,7 @@ export class ToDoListComponent extends Component {
   }
 
   componentDidMount() {
-    const { firebase } = this.props;
+    const { firebase, onUpdateToDos } = this.props;
     this.setState({ isLoading: true });
     this.unsubscribe = firebase
       .toDos()
@@ -41,9 +47,11 @@ export class ToDoListComponent extends Component {
           snapshot.forEach(doc => {
             toDos.push({ ...doc.data(), uid: doc.id });
           });
-          this.setState({ toDos, isLoading: false });
+          onUpdateToDos(toDos);
+          this.setState({ isLoading: false });
         } else {
-          this.setState({ toDos: [], isLoading: false });
+          onUpdateToDos([]);
+          this.setState({ isLoading: false });
         }
       });
   }
@@ -68,8 +76,7 @@ export class ToDoListComponent extends Component {
   }
 
   renderToDos() {
-    const { authUser } = this.props;
-    const { toDos } = this.state;
+    const { authUser, toDos } = this.props;
 
     if (!authUser || !toDos) return [];
 
@@ -156,18 +163,18 @@ export class ToDoListComponent extends Component {
   }
 
   render() {
-    const { isLoading, toDos } = this.state;
+    const { toDos } = this.props;
+    const { isLoading } = this.state;
     const toDosTable = this.renderToDos();
     const toDoCount = toDos.length;
     const toDosExist = toDoCount > 0;
 
     return (
       <div>
-        {isLoading && <p>Loading...</p>}
         {toDosExist && (
           <div>
             <p>
-              <em>{toDoCount} results</em>
+              {isLoading ? <em>Loading...</em> : <em>{toDoCount} results</em>}
             </p>
             {toDosTable}
           </div>
@@ -177,4 +184,17 @@ export class ToDoListComponent extends Component {
   }
 }
 
-export const ToDoList = withFirebase(ToDoListComponent);
+const mapStateToProps = state => ({
+  toDos: selectToDos(state)
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onUpdateToDos: toDos => dispatch(updateToDos(toDos))
+  };
+};
+
+export const ToDoList = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withFirebase
+)(ToDoListComponent);
