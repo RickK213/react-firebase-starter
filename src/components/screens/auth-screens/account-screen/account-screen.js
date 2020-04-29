@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
-import {
-  // withAuthorization,
-  withEmailVerification
-} from '../../../session';
+import { withAuthorization, withEmailVerification } from '../../../session';
 import { PasswordChangeForm } from './password-change-form/password-change-form';
 import { selectAuthUser } from '../../../../store/auth-user/auth-user';
 
@@ -40,10 +37,10 @@ const mapStateToProps = state => ({
   authUser: selectAuthUser(state)
 });
 
-// const condition = authUser => !!authUser;
+const condition = authUser => !!authUser;
 
 export const AccountScreen = compose(
   connect(mapStateToProps),
-  withEmailVerification
-  // withAuthorization(condition)
+  withEmailVerification,
+  withAuthorization(condition)
 )(AccountScreenComponent);

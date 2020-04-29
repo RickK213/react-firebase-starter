@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'recompose';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withEmailVerification, withAuthorization } from '../../session';
+import { withAuthorization, withEmailVerification } from '../../session';
 import { ToDoList } from './to-do-list/to-do-list';
 import { AddToDoForm } from './add-to-do-form/add-to-do-form';
 import { selectAuthUser } from '../../../store/auth-user/auth-user';

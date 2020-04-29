@@ -4,11 +4,8 @@ import { compose } from 'recompose';
 import { UserList } from './user-list/user-list';
 import { ROUTES } from '../../../../constants/routes';
 import { UserDetail } from './user-detail/user-detail';
-import {
-  withEmailVerification
-  // withAuthorization
-} from '../../../session';
-// import { ROLES } from '../../../../constants/roles';
+import { withAuthorization, withEmailVerification } from '../../../session';
+import { ROLES } from '../../../../constants/roles';
 
 export const AdminScreenComponent = () => {
   return (
@@ -22,9 +19,9 @@ export const AdminScreenComponent = () => {
   );
 };
 
-// const condition = authUser => authUser && authUser.roles.includes(ROLES.ADMIN);
+const condition = authUser => authUser && authUser.roles.includes(ROLES.ADMIN);
 
 export const AdminScreen = compose(
-  withEmailVerification
-  // withAuthorization(condition)
+  withEmailVerification,
+  withAuthorization(condition)
 )(AdminScreenComponent);
