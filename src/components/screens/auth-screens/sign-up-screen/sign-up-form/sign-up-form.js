@@ -4,12 +4,10 @@ import { withRouter } from 'react-router-dom';
 import { withFirebase } from '../../../../firebase';
 import { ROUTES } from '../../../../../constants/routes';
 import { inputStyle, buttonStyle, formStyle } from '../../auth-screen-styles';
-import { ROLES } from '../../../../../constants/roles';
 
 export const INITIAL_STATE = {
   email: '',
   error: null,
-  isAdmin: false,
   passwordOne: '',
   passwordTwo: '',
   username: ''
@@ -45,24 +43,18 @@ export class SignUpFormComponent extends Component {
   }
 
   handleOnSubmit(event) {
-    const { email, isAdmin, passwordOne, username } = this.state;
+    const { email, passwordOne, username } = this.state;
     const { firebase, history } = this.props;
-
-    const roles = [ROLES.BASE_USER];
-
-    if (isAdmin) {
-      roles.push(ROLES.ADMIN);
-    }
 
     firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-        // Create a user in the firebase realtime db:
-        // Adding 'merge' option in case we add future log-in methods,
-        // it will merge with an existing user doc
+        // Add userername to the user doc in the firestore users/ collection
+        // Adding 'merge' option to merge with an existing user doc
+        // since we have a cloud function to set up user roles.
         return firebase
           .user(authUser.user.uid)
-          .set({ email, roles, username }, { merge: true });
+          .set({ username }, { merge: true });
       })
       .then(() => {
         return firebase.doSendEmailVerification();
@@ -79,14 +71,7 @@ export class SignUpFormComponent extends Component {
   }
 
   render() {
-    const {
-      email,
-      error,
-      isAdmin,
-      passwordOne,
-      passwordTwo,
-      username
-    } = this.state;
+    const { email, error, passwordOne, passwordTwo, username } = this.state;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
@@ -128,17 +113,6 @@ export class SignUpFormComponent extends Component {
           type="password"
           value={passwordTwo}
         />
-        <div>
-          <label htmlFor="isAdmin">
-            Admin:
-            <input
-              name="isAdmin"
-              type="checkbox"
-              checked={isAdmin}
-              onChange={this.handleOnCheckboxChange}
-            />
-          </label>
-        </div>
         <div style={{ marginTop: '1rem' }}>
           <button type="submit" disabled={isInvalid} style={buttonStyle}>
             Sign Up

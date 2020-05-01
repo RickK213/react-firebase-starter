@@ -69,19 +69,6 @@ exports[`<SignUpFormComponent /> should render correctly 1`] = `
     type="password"
     value=""
   />
-  <div>
-    <label
-      htmlFor="isAdmin"
-    >
-      Admin:
-      <input
-        checked={false}
-        name="isAdmin"
-        onChange={[Function]}
-        type="checkbox"
-      />
-    </label>
-  </div>
   <div
     style={
       Object {
