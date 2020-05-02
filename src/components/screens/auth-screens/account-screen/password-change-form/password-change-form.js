@@ -7,7 +7,8 @@ import { inputStyle, buttonStyle, formStyle } from '../../auth-screen-styles';
 export const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
-  error: null
+  error: null,
+  success: null
 };
 
 export class PasswordChangeFormComponent extends Component {
@@ -39,7 +40,10 @@ export class PasswordChangeFormComponent extends Component {
     firebase
       .doPasswordUpdate(passwordOne)
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
+        this.setState({
+          ...INITIAL_STATE,
+          success: { message: 'Your password has been changed.' }
+        });
       })
       .catch(error => {
         this.setState({ ...INITIAL_STATE, error });
@@ -50,7 +54,7 @@ export class PasswordChangeFormComponent extends Component {
   }
 
   render() {
-    const { error, passwordOne, passwordTwo } = this.state;
+    const { error, passwordOne, passwordTwo, success } = this.state;
 
     const isInvalid = passwordOne === '' || passwordOne !== passwordTwo;
 
@@ -79,6 +83,7 @@ export class PasswordChangeFormComponent extends Component {
         </button>
 
         {error && <p>{error.message}</p>}
+        {success && <p>{success.message}</p>}
       </form>
     );
   }
