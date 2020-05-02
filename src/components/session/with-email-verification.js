@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import AuthUserContext from './context';
 import { withFirebase } from '../firebase';
 import { buttonStyle } from '../screens/auth-screens/auth-screen-styles';
 import { selectAuthUser } from '../../store/auth-user/auth-user';
@@ -10,10 +9,12 @@ import { selectAuthUser } from '../../store/auth-user/auth-user';
 export const withEmailVerification = Component => {
   class WithEmailVerification extends React.Component {
     static propTypes = {
+      authUser: PropTypes.object,
       firebase: PropTypes.object
     };
 
     static defaultProps = {
+      authUser: {},
       firebase: {}
     };
 
@@ -44,45 +45,46 @@ export const withEmailVerification = Component => {
     }
 
     render() {
+      const { authUser } = this.props;
       const { isSent } = this.state;
-      return (
-        <AuthUserContext.Consumer>
-          {authUser =>
-            WithEmailVerification.needsEmailVerification(authUser) ? (
+
+      const userNeedsEmailVerification = WithEmailVerification.needsEmailVerification(
+        authUser
+      );
+
+      if (userNeedsEmailVerification) {
+        return (
+          <div>
+            {isSent ? (
               <div>
-                {isSent ? (
-                  <React.Fragment>
-                    <h2>E-Mail Confirmation Sent</h2>
-                    <p>
-                      Check your E-Mail (including your Spam folder) for a
-                      confirmation E-Mail. Refresh this page once you have
-                      confirmed your E-Mail address.
-                    </p>
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    <h2>Verify your E-Mail</h2>
-                    <p>
-                      Check your E-Mail (including your Spam folder) for a
-                      confirmation E-Mail or send another confirmation E-Mail.
-                    </p>
-                  </React.Fragment>
-                )}
-                <button
-                  disabled={isSent}
-                  onClick={this.handleSendEmailVerification}
-                  style={buttonStyle}
-                  type="button"
-                >
-                  Send confirmation E-Mail
-                </button>
+                <h2>E-Mail Confirmation Sent</h2>
+                <p>
+                  Check your E-Mail (including your Spam folder) for a
+                  confirmation E-Mail. Refresh this page once you have confirmed
+                  your E-Mail address.
+                </p>
               </div>
             ) : (
-              <Component {...this.props} />
-              // eslint-disable-next-line prettier/prettier
+              <div>
+                <h2>Verify your E-Mail</h2>
+                <p>
+                  Check your E-Mail (including your Spam folder) for a
+                  confirmation E-Mail or send another confirmation E-Mail.
+                </p>
+              </div>
             )}
-        </AuthUserContext.Consumer>
-      );
+            <button
+              disabled={isSent}
+              onClick={this.handleSendEmailVerification}
+              style={buttonStyle}
+              type="button"
+            >
+              Send confirmation E-Mail
+            </button>
+          </div>
+        );
+      }
+      return <Component {...this.props} />;
     }
   }
 
