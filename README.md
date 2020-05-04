@@ -4,7 +4,7 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 
-# 🔥🔐 React Firebase Starter
+# ⚛️🔥 React Firebase Starter
 An application using [React](https://reactjs.org/), [Firebase](https://firebase.google.com/) and [Redux](https://redux.js.org/) designed to be used as a starting point for web applications.
 
 ## Table of Contents
