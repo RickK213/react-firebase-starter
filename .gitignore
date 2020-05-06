@@ -2,7 +2,7 @@ coverage/
 dist/
 node_modules/
 npm-debug.*
-private/
+*.private*
 .firebase/
 firestore-debug.log
 firebase-debug.log

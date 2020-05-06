@@ -31,7 +31,7 @@ describe('<PasswordChangeFormComponent />', () => {
 
   describe('handleOnSubmit', () => {
     it('should call this.setState with the correct arguments and event.preventDefault() if firebase call succeeds', async () => {
-      const doPasswordUpdate = jest.fn().mockResolvedValue('default');
+      const doPasswordUpdate = jest.fn().mockResolvedValue();
       const firebase = { doPasswordUpdate };
       const setState = jest.fn();
       const preventDefault = jest.fn();
@@ -41,7 +41,10 @@ describe('<PasswordChangeFormComponent />', () => {
       );
       component.instance().setState = setState;
       await component.instance().handleOnSubmit(event);
-      expect(setState).toHaveBeenCalledWith({ ...INITIAL_STATE });
+      expect(setState).toHaveBeenCalledWith({
+        ...INITIAL_STATE,
+        success: { message: 'Your password has been changed.' }
+      });
       expect(preventDefault).toHaveBeenCalled();
     });
 

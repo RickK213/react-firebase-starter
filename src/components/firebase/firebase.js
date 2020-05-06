@@ -1,10 +1,15 @@
 import app from 'firebase/app';
-import {
-  FIREBASE_CONFIG,
-  CONFIRMATION_EMAIL_REDIRECT
-} from '../../../private/firebase-config';
+import { FIREBASE_CONFIG } from '../../../firebase-config/firebase-config.private';
 import 'firebase/auth';
 import 'firebase/firestore';
+import { ROUTES } from '../../constants/routes';
+
+const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://react-firebase-starter-dacdd.web.app'
+    : 'http://localhost:3000';
+
+const CONFIRMATION_EMAIL_REDIRECT = `${baseUrl}${ROUTES.HOME.path}`;
 
 class Firebase {
   constructor() {

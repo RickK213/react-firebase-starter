@@ -3,7 +3,6 @@ const admin = require('firebase-admin');
 
 admin.initializeApp();
 
-// TODO: Set up app configuration file?
 const ADMIN_EMAIL_ADDRESS = 'admin@yourdomain.com';
 
 const onAuthUserCreate = functions.auth.user().onCreate(user => {

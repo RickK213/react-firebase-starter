@@ -11,30 +11,33 @@ An application using [React](https://reactjs.org/), [Firebase](https://firebase.
 1. [Getting Started](#getting-started)
   * [Prerequisites](#prerequisites)
   * [Installing](#installing)
-2. [Development](#development)
+2. [Firebase](#firebase)
+  * [Configuration](#configuration)
+  * [Products Supported](#products-supported)
+  * [Screens](#screens)
+3. [Developing](#developing)
   * [Webpack Dev Server](#webpack-dev-server)
   * [ESLint and Prettier.io](#eslint-and-prettierio)
-  * [Committing](#committing)
-3. [Testing](#testing)
-4. [Scripts](#scripts)
-5. [Dependencies](#dependencies)
-  * [Development](#dependencies-development)
-  * [Production](#dependencies-production)
-  * [Testing](#dependencies-testing)
-6. [Authors](#authors)
+4. [Deploying](#deploying)
+5. [Testing](#testing)
+6. [Scripts](#scripts)
+7. [Authors](#authors)
 
 <a name="getting-started"></a>
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 <a name="prerequisites"></a>
+
 ### Prerequisites
 
 #### Node.js & Node Package Manager
-You'll need to download and install Node.js version 6 or higher and Node Package Manager for installing dependencies.  Node Package Manager is installed when installing Node.js.  Download the latest version of Node.js [here](https://nodejs.org/en/download/).
+You'll need to download and install Node.js version 6 or higher and Node Package Manager for installing dependencies. Node Package Manager is installed when installing Node.js. Download the latest version of Node.js [here](https://nodejs.org/en/download/).
 
 <a name="installing"></a>
+
 ### Installing
 You'll need to clone this repository to your working directory on your local machine, then install the project dependencies using **Node Package Manager** through the command line.
 
@@ -59,12 +62,51 @@ Finally, run `npm install` to install all project dependencies:
 npm install
 ```
 
-<a name="development"></a>
-## Development
+<a name="firebase"></a>
+
+## Firebase
+
+<a name="configuration"></a>
+
+### Configuration
+To add your Firebase configuration to the application, follow these steps:
+1. [Create a Firebase project](https://firebase.google.com/docs/web/setup) and find/copy your [Firebase config object](https://firebase.google.com/docs/web/setup#config-object)
+2. Re-name `./app-config/firebase-config.sample.js` to `firebase-config.private.js` (Note that `.gitignore` is already configure to prevent this file from being added to the repository as it contains sensitive information).
+3. Paste the contents for your Firebase config object into the re-named file
+4. Change the "default" project in `./firebaserc` to your Firebase project id
+5. Update the constant `ADMIN_EMAIL_ADDRESS` in `./functions/on-auth-user-create/on-auth-user-create.js` to your preferred email address. Creating an account with this email address will give that user the `ADMIN` role.
+
+<a name="products-supported"></a>
+
+### Products Supported
+This project implements and utilizes the following Firebase products:
+* [Authentication](https://firebase.google.com/docs/auth)
+* [Cloud Firestore](https://firebase.google.com/docs/firestore)
+* [Hosting](https://firebase.google.com/docs/hosting)
+* [Cloud Functions](https://firebase.google.com/docs/functions)
+
+<a name="screens"></a>
+
+### Screens
+The following screens for authenticating the user and displaying sample data are included. However, these screens and their child components are meant to be re-styled, replaced or removed. No CSS/SASS/LESS files are included in this project and webpack will require configuration to bundle stylesheets.
+| Screen          | Description                                                            | Route              |
+|-----------------|------------------------------------------------------------------------|--------------------|
+| Sign Up         | Users can create an account                                            | `/sign-up`         |
+| Sign In         | Users can sign in to their account                                     | `/sign-in`         |
+| Forgot Password | Users can reset their password                                         | `/password-forget` |
+| Home            | Authenticated users can create, edit & delete To Dos                   | `/`                |
+| Account         | Authenticated users can view account details and change their password | `/account`         |
+| Admin           | `ADMIN` users can view the list of users | `/admin`                    | `/admin`           |
+| User Detail     | `ADMIN` users can view user details and send a password reset email    | `/admin/{userId}`  |
+
+<a name="developing"></a>
+
+## Developing
 
 <a name="webpack-dev-server"></a>
+
 ### Webpack Dev Server
-During development, this application can be run in a web browser using [Webpack Dev Server](https://webpack.js.org/configuration/dev-server/).  To start the application in a web browser, navigate to the root of the project directory in the command line and run `npm run start`.  This command will print out a URL which can be opened in a web browser.
+During development, the application can be run in a web browser using [Webpack Dev Server](https://webpack.js.org/configuration/dev-server/). To start the application in a web browser, navigate to the root of the project directory in the command line and run `npm run start`. This command will print out a URL which can be opened in a web browser.
 
 First, navigate to the root of the project:
 ```
@@ -85,92 +127,63 @@ After Webpack Dev Server has compiled the development bundle, it will print out 
 Open the URL [http://localhost:3000/](http://localhost:3000/) in your web browser.
 
 #### Hot Reloading
-This project is equipped with [Webpack Hot Module Replacement](https://webpack.js.org/concepts/hot-module-replacement/).  This means that while Webpack Dev Server is running the documentation application, you can make changes to the files and they will automatically update in the web browser.  Occasionally, the web browser may need a manual refresh if you're changes affect application state or changes outside of the React life-cycle.
+This project is equipped with [Webpack Hot Module Replacement](https://webpack.js.org/concepts/hot-module-replacement/). This means that while Webpack Dev Server is running the application, you can make changes to the files and they will automatically update in the web browser. Occasionally, the web browser may need a manual refresh if you're changes affect application state or changes outside of the React life-cycle.
 
 <a name="eslint-and-prettierio"></a>
+
 ### ESLint and Prettier.io
 This project is equipped with [ESLint](https://eslint.org/) and [Prettier.io](https://prettier.io/) to ensure a homogeneous code-style and JavaScript syntactical error prevention.
 
 During development, you can run `npm run eslint:fix` in the root of the project to automatically fix any fixable [ESLint errors/warnings](.eslintrc), and format your JavaScript to match the [Prettier standards](.prettierrc).
 
-<a name="committing"></a>
-### Committing
-To ensure the commit history of this project remains helpful, please use the commit rules outlined [here](https://chris.beams.io/posts/git-commit/) when committing.
-
-To making following these rules easier, this project is equipped with a [Git commit template](commit.template.txt):
-
-```
-# <type>: (If applied, this commit will...) <subject> (Max 50 char)
-# |<----  Using a Maximum Of 50 Characters  ---->|
-
-
-# Explain why this change is being made
-# |<----   Try To Limit Each Line to a Maximum Of 72 Characters   ---->|
-
-# Provide links or keys to any relevant tickets, articles or other resources
-# Example: JIRA issue #23
-
-# --- COMMIT END ---
-# Type can be
-#    breaking (changes that break previous implementations)
-#    feat     (new feature)
-#    fix      (bug fix)
-#    refactor (refactoring production code)
-#    revert   (changes that revert a previous commit)
-#    style    (formatting, missing semi colons, etc; no code change)
-#    docs     (changes to documentation)
-#    test     (adding or refactoring tests; no production code change)
-#    chore    (updating grunt tasks etc; no production code change)
-#    other    (changes that do not fit in above categories)
-# --------------------
-# Remember to
-#    Capitalize the subject line
-#    Use the imperative mood in the subject line
-#    Do not end the subject line with a period
-#    Separate subject from body with a blank line
-#    Use the body to explain what and why vs. how
-#    Can use multiple lines with "-" for bullet points in body
-# --------------------
-
-```
-
-To enable this Git commit template, run the following command from the root of the project:
-```
-git config --global commit.template commit.template.txt
-```
-
 #### Pre-Commit Hooks
-This project is equipped with [Git Pre-Commit Hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) to help ensure successful builds.  These "hooks" are a set of scripts that will run before allowing a developer to commit to the project.  If any of these scripts fail the commit will cancel.
+This project is equipped with [Git Pre-Commit Hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) to help ensure successful builds. These "hooks" are a set of scripts that will run before allowing a developer to commit to the project. If any of these scripts fail the commit will cancel.
 
 Before allowing a successful commit Git will run the following scripts:
 ```
 npm run eslint
 npm run test:changed
 ```
-It's recommended a developers run `npm run eslint:fix` often during development to prevent any failures from code-style or JavaScript syntactical errors.
+It's recommended that developers run `npm run eslint:fix` often during development to prevent any failures from code-style or JavaScript syntactical errors.
+
+<a name="deploying"></a>
+
+## Deploying
+To deploy the application to Firebase hosting and deploy Firebase Cloud Functions, follow these steps:
+1. [Install the Firebase CLI](https://firebase.google.com/docs/hosting/quickstart#install-cli)
+2. Ensure you are logged in to your Firebase account by running `firebase login`
+6. [Activate hosting](https://firebase.google.com/docs/hosting/quickstart) in your Firebase project
+4. Run this script: `npm run deploy` This will clean the `./dist` folder and re-build the application.
+
+Note that you can deploy the application and Firebase Cloud Functions independently by running Firebase CLI commands directly and including the `--only` flag. For example, to deploy functions only, run `firebase deploy --only functions`
 
 <a name="testing"></a>
-## Testing
-This project is equipped with [Jest](https://jestjs.io/), and [Enzyme](https://github.com/airbnb/enzyme) to assist in testing JavaScript files. Each JavaScript file in the application should be in it's own folder with a sibling `.test.js` test file.  The test file should test as close to 100% of it's sibling.
 
-To check the test coverage of the application run `npm run test:coverage`.  This script will print out a code coverage report in the command line and generate an LCOV code coverage report in the project's `./coverage/` folder.
+## Testing
+This project is equipped with [Jest](https://jestjs.io/), and [Enzyme](https://github.com/airbnb/enzyme) to assist in testing JavaScript files. Each JavaScript file in the application should be in it's own folder with a sibling `.test.js` test file. The test file should test as close to 100% of it's sibling.
+
+To check the test coverage of the application run `npm run test:coverage`. This script will print out a code coverage report in the command line and generate an LCOV code coverage report in the project's `./coverage/` folder.
 
 <a name="scripts"></a>
+
 ## Scripts
 ### `build`
-This command runs `webpack` in "production" mode.  It uses the `src/index.js` file as it's entry point, and generates a JavaScript `main.js` and `vendor.js` file in `dist/`.
+This command runs `webpack` in "production" mode. It uses the `src/index.js` file as it's entry point, and generates a JavaScript `bundle.js` and `index.html` file in `dist/`.
 
 ### `clean`
-This command delets the `dist/` directory.
+This command deletes the `dist/` directory.
+
+### `deploy`
+This command runs `clean`, `build` and `firebase deploy` to deploy the application and Cloud Functions to Firebase.
 
 ### `eslint`
-This command runs `eslint src/`.  It prints eslint warnings and errors in the command line.
+This command runs `eslint src/`. It prints eslint warnings and errors in the command line.
 
 ### `eslint:fix`
-This command runs `eslint --fix src/`.  It attempts to fix any eslint warnings/errors then prints the remaining warnings and errors in the command line.
+This command runs `eslint --fix src/`. It attempts to fix any eslint warnings/errors then prints the remaining warnings and errors in the command line.
 
 #### `start`
-This command runs `webpack-dev-server` in "development" mode on the documentation. Hot reloading is enabled.  Once running, you can access the documentation running locally at [localhost:3000/](http://localhost:3000/).
+This command runs `webpack-dev-server` in "development" mode on the documentation. Hot reloading is enabled. Once running, you can access the documentation running locally at [localhost:3000/](http://localhost:3000/).
 
 ### `test`
 This command runs `jest`. It prints test successes/failures in the command line.
@@ -179,99 +192,10 @@ This command runs `jest`. It prints test successes/failures in the command line.
 This command runs `jest -o` on the JavaScript files that have changed or are uncommitted. It prints test successes/failures in the command line.
 
 ### `test:coverage`
-This command runs `jest --coverage`.  It prints the test successes/failures in the command line and creates an .html test coverage report in `./coverage/lcov-report/index.html`.
-
-# 🚧 UNDER CONSTRUCTION 🚧
-<a name="dependencies"></a>
-## Dependencies
-The following are the dependencies in `package.json` separated into the categories in which the dependencies are required.
-
-<a name="dependencies-development"></a>
-### Development
-
-#### Git
-* pre-commit // simple package to integration with git pre-commit
-
-#### Linting JavaScript
-* babel-eslint
-* eslint
-* eslint-config-joey
-* eslint-import-resolver-babel-module
-* prettier
-* react-hot-loader
-
-#### Linting Styles
-* stylelint
-* stylelint-config-standard
-
-#### Transpilation
-* @babel/cli
-* babel-plugin-lodash
-
-#### Webpack
-* @babel/register // this is necessary to use the .babel.js extension on the Wepback configuration
-* clean-webpack-plugin
-* path
-* webpack
-* webpack-cli
-* webpack-dev-server
-* webpack-merge
-
-##### Fonts
-* file-loader
-* url-loader
-
-##### JavaScript
-* babel-loader
-* uglifyjs-webpack-plugin
-
-##### Styles
-* autoprefixer
-* css-loader
-* mini-css-extract-plugin
-* node-sass
-* optimize-css-assets-webpack-plugin
-* postcss-loader
-* sass-loader
-* style-loader
-
-##### Templates
-* html-webpack-plugin
-
-<a name="dependencies-production"></a>
-### Production
-* font-awesome
-
-#### JavaScript
-* classnames
-* lodash
-* prop-types
-* react
-* react-dom
-* react-redux
-* react-router-dom
-* redux
-* redux-actions
-* redux-thunk
-
-#### Styles
-* animate.css
-* normalize.css
-
-<a name="dependencies-testing"></a>
-### Testing
-* babel-core // this is necessary as a bridge until babel-jest supports Babel 7
-* babel-jest
-* enzyme
-* enzyme-adapter-react-16
-* identity-obj-proxy
-* jest
-* jest-dot-reporter
-* react
-* react-dom
-* react-test-renderer
+This command runs `jest --coverage`. It prints the test successes/failures in the command line and creates an .html test coverage report in `./coverage/lcov-report/index.html`.
 
 <a name="authors"></a>
+
 ## Authors
 * **Rick Kippert** - *Initial work*
 
